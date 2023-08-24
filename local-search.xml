@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>pyside6安装后使用报错及解决方法</title>
+    <link href="/2023/08/24/pyside6%E5%AE%89%E8%A3%85%E5%90%8E%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99/"/>
+    <url>/2023/08/24/pyside6%E5%AE%89%E8%A3%85%E5%90%8E%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99/</url>
+    
+    <content type="html"><![CDATA[<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>ubuntu 20.04</p><h3 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h3><p>通过pip安装完后pyside6，使用时报错</p><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">qt.qpa.plugin: Could <span class="hljs-keyword">not</span> <span class="hljs-built_in">load</span> <span class="hljs-keyword">the</span> Qt <span class="hljs-built_in">platform</span> plugin <span class="hljs-string">&quot;xcb&quot;</span> <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;&quot;</span> even though <span class="hljs-keyword">it</span> was found.<br>This application failed <span class="hljs-built_in">to</span> <span class="hljs-built_in">start</span> because no Qt <span class="hljs-built_in">platform</span> plugin could be initialized. Reinstalling <span class="hljs-keyword">the</span> application may fix this problem.<br><br>Available <span class="hljs-built_in">platform</span> plugins are: offscreen, wayland-egl, linuxfb, vkkhrdisplay, minimalegl, minimal, wayland, xcb, eglfs, vnc.<br><br>Aborted (core dumped)<br></code></pre></td></tr></table></figure><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>参考<a href="https://blog.csdn.net/LOVEmy134611/article/details/107212845">https://blog.csdn.net/LOVEmy134611/article/details/107212845</a></p><ol><li><p>在<code>~/.bashrc</code>最后加入</p> <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">export</span> <span class="hljs-attribute">QT_DEBUG_PLUGINS</span>=1<br></code></pre></td></tr></table></figure></li><li><p>再次调用pyside6函数，查看详细报错输出，在最下方找到</p> <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stata">xxx<br>libxcb-cursor.<span class="hljs-keyword">so</span>.0: cannot <span class="hljs-keyword">open</span> shared object <span class="hljs-keyword">file</span>: <span class="hljs-keyword">No</span> such <span class="hljs-keyword">file</span> or directory<br>xxx<br></code></pre></td></tr></table></figure></li><li><p>安装库libxcb-cursor0后，能够正常运行</p> <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo apt <span class="hljs-keyword">install</span> libxcb-cursor0<br></code></pre></td></tr></table></figure></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>前端</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>2024秋招美团笔试题目记录(2023.8.12, 2023.8.19)</title>
     <link href="/2023/08/12/2024%E7%A7%8B%E6%8B%9B%E7%BE%8E%E5%9B%A2%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE%E8%AE%B0%E5%BD%95(2023.8.12,2023.8.19)/"/>
     <url>/2023/08/12/2024%E7%A7%8B%E6%8B%9B%E7%BE%8E%E5%9B%A2%E7%AC%94%E8%AF%95%E9%A2%98%E7%9B%AE%E8%AE%B0%E5%BD%95(2023.8.12,2023.8.19)/</url>
