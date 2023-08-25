@@ -24,7 +24,7 @@
 <meta property="og:description" content="ubuntu 20.04 安装pyside6">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-08-24T12:48:49.000Z">
-<meta property="article:modified_time" content="2023-08-24T13:07:24.058Z">
+<meta property="article:modified_time" content="2023-08-25T04:59:26.413Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          649 words
+          698 words
         
       </span>
     
@@ -367,9 +367,13 @@
 
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/LOVEmy134611/article/details/107212845">https://blog.csdn.net/LOVEmy134611/article/details/107212845</a></p>
 <ol>
-<li><p>在<code>~/.bashrc</code>最后加入</p>
+<li><p>修改脚本文件<code>~/.bashrc</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">vim ~/.bashrc</span><br></code></pre></td></tr></table></figure></li>
+<li><p>在最后加入</p>
  <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">export</span> <span class="hljs-attribute">QT_DEBUG_PLUGINS</span>=1<br></code></pre></td></tr></table></figure>
 </li>
+<li><p>保存退出，使配置文件生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">source</span> ~/.bashrc</span><br></code></pre></td></tr></table></figure></li>
 <li><p>再次调用pyside6函数，查看详细报错输出，在最下方找到</p>
  <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stata">xxx<br>libxcb-cursor.<span class="hljs-keyword">so</span>.0: cannot <span class="hljs-keyword">open</span> shared object <span class="hljs-keyword">file</span>: <span class="hljs-keyword">No</span> such <span class="hljs-keyword">file</span> or directory<br>xxx<br></code></pre></td></tr></table></figure>
 </li>
