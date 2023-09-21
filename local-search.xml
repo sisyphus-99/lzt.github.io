@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>pyside6使用过程中的问题记录</title>
+    <link href="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/"/>
+    <url>/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</url>
+    
+    <content type="html"><![CDATA[<h3 id="问题1：qgraphicsview画polyline"><a href="#问题1：qgraphicsview画polyline" class="headerlink" title="问题1：qgraphicsview画polyline"></a>问题1：qgraphicsview画polyline</h3><p>由于想实现界面上的部件都可以交互（点击，拖拽），因此想在qgrahicsview类里画，但qgraphicsscene没有可直接调用的画polyline的函数，实现方法是qpainterpath</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainWidget</span>(QtWidgets.QGraphicsView)<br>&#123;<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.initUI()<br>        self.scaleFactor = <span class="hljs-number">1</span><br>        self.resize(<span class="hljs-number">800</span>, <span class="hljs-number">800</span>) <br><br>        self.scene_map = QtWidgets.QGraphicsScene()<br>        self.scene_map.setSceneRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">700</span>, <span class="hljs-number">700</span>)<br>        self.scene_map.setBackgroundBrush(Qt.white)<br>        self.setScene(self.scene_map)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">drawPolyline</span>(<span class="hljs-params">self, points:<span class="hljs-built_in">list</span>[<span class="hljs-built_in">tuple</span>], color:QtGui.QColor, width:<span class="hljs-built_in">int</span> = <span class="hljs-number">1.0</span></span>):<br>        points = [QPointF(x,y) <span class="hljs-keyword">for</span> x,y <span class="hljs-keyword">in</span> points]<br>        path = QtGui.QPainterPath()<br>        polygon = QtGui.QPolygonF(points)<br>        path.addPolygon(polygon)<br>        <br>        pen = QtGui.QPen(color)<br>        pen.setWidth(width)<br>        new_item = QtWidgets.QGraphicsPathItem(path, <span class="hljs-literal">None</span>)<br>        new_item.setPath(path)<br>        new_item.setPen(pen)<br>        self.scene_map.addItem(new_item)<br><br>&#125;<br></code></pre></td></tr></table></figure><h3 id="问题2：画出来的polyline不够平滑，不好看"><a href="#问题2：画出来的polyline不够平滑，不好看" class="headerlink" title="问题2：画出来的polyline不够平滑，不好看"></a>问题2：画出来的polyline不够平滑，不好看</h3><p>用上述方式画出的图如下所示：</p><img src="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/1.jpg" class="" title="fig:1"><p>为了平滑线段，可以给<code>QGraphicsview</code>设置渲染的参数，<code>setRenderHint</code>。在<code>__init__</code>函数里加入下面一行：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">self.setRenderHint(QtGui.QPainter.Antialiasing, <span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure><p>得到的结果如下：</p><img src="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/2.png" class="" title="fig:1"><p>可以看到没有那些突兀的转折了。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>前端</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>PCL对大规模点云进行体素降采样</title>
     <link href="/2023/09/14/pcl%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%82%B9%E4%BA%91%E9%99%8D%E9%87%87%E6%A0%B7/"/>
     <url>/2023/09/14/pcl%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%82%B9%E4%BA%91%E9%99%8D%E9%87%87%E6%A0%B7/</url>
