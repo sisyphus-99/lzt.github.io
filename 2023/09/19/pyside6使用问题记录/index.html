@@ -18,22 +18,22 @@
   
     <meta name="description" content="qgraphicsview, polyline, smooth">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pyside6使用过程中的问题记录">
+<meta property="og:title" content="pyside6应用过程中的问题记录">
 <meta property="og:url" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="My Rock">
 <meta property="og:description" content="qgraphicsview, polyline, smooth">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/1.jpg">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/2.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/1.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/1.png">
 <meta property="article:published_time" content="2023-09-19T12:17:29.000Z">
-<meta property="article:modified_time" content="2023-09-21T07:37:19.636Z">
+<meta property="article:modified_time" content="2023-09-21T11:20:08.586Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/1.jpg">
+<meta name="twitter:image" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/1.png">
   
   
   
-  <title>pyside6使用过程中的问题记录 - My Rock</title>
+  <title>pyside6应用过程中的问题记录 - My Rock</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="pyside6使用过程中的问题记录"></span>
+            <span id="subtitle" data-typed-text="pyside6应用过程中的问题记录"></span>
           
         </div>
 
@@ -251,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          988 words
+          2.6k words
         
       </span>
     
@@ -262,7 +262,7 @@
         
         
         
-          9 mins
+          22 mins
         
       </span>
     
@@ -334,19 +334,19 @@
     
       
       
-        <a href="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" title="pyside6使用过程中的问题记录"
+        <a href="/2023/08/24/pyside6%E5%AE%89%E8%A3%85%E5%90%8E%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99/" title="pyside6安装后报错及解决方法"
            class="list-group-item list-group-item-action
-           active">
-          <span class="category-post">pyside6使用过程中的问题记录</span>
+           ">
+          <span class="category-post">pyside6安装后报错及解决方法</span>
         </a>
       
     
       
       
-        <a href="/2023/08/24/pyside6%E5%AE%89%E8%A3%85%E5%90%8E%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99/" title="pyside6安装后报错及解决方法"
+        <a href="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" title="pyside6应用过程中的问题记录"
            class="list-group-item list-group-item-action
-           ">
-          <span class="category-post">pyside6安装后报错及解决方法</span>
+           active">
+          <span class="category-post">pyside6应用过程中的问题记录</span>
         </a>
       
     
@@ -368,24 +368,37 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">pyside6使用过程中的问题记录</h1>
+            <h1 id="seo-header">pyside6应用过程中的问题记录</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="问题1：qgraphicsview画polyline"><a href="#问题1：qgraphicsview画polyline" class="headerlink" title="问题1：qgraphicsview画polyline"></a>问题1：qgraphicsview画polyline</h3><p>由于想实现界面上的部件都可以交互（点击，拖拽），因此想在qgrahicsview类里画，但qgraphicsscene没有可直接调用的画polyline的函数，实现方法是qpainterpath</p>
+                <p>近期在做的任务要把交通路网结果用PySide6可视化，并添加一些选择车道，拖拽车辆之类的交互操作。以下是在应用过程中出现的一些问题和解决方案。</p>
+<h3 id="问题1：qgraphicsview画polyline"><a href="#问题1：qgraphicsview画polyline" class="headerlink" title="问题1：qgraphicsview画polyline"></a>问题1：qgraphicsview画polyline</h3><p>由于希望界面上的部件都可以交互（点击，拖拽），因此我尝试在<code>QGrahicsView</code>类里画，但发现<code>QGraphicsScene</code>没有可直接调用的画polyline的函数，可行的方法是先画出QPainterPath，再用QGraphicsPath。如下面的程序，drawPolyline函数可输入2D points, color, width，画出这些点的折线段。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MainWidget</span>(QtWidgets.QGraphicsView)<br>&#123;<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        self.initUI()<br>        self.scaleFactor = <span class="hljs-number">1</span><br>        self.resize(<span class="hljs-number">800</span>, <span class="hljs-number">800</span>) <br><br>        self.scene_map = QtWidgets.QGraphicsScene()<br>        self.scene_map.setSceneRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">700</span>, <span class="hljs-number">700</span>)<br>        self.scene_map.setBackgroundBrush(Qt.white)<br>        self.setScene(self.scene_map)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">drawPolyline</span>(<span class="hljs-params">self, points:<span class="hljs-built_in">list</span>[<span class="hljs-built_in">tuple</span>], color:QtGui.QColor, width:<span class="hljs-built_in">int</span> = <span class="hljs-number">1.0</span></span>):<br>        points = [QPointF(x,y) <span class="hljs-keyword">for</span> x,y <span class="hljs-keyword">in</span> points]<br>        path = QtGui.QPainterPath()<br>        polygon = QtGui.QPolygonF(points)<br>        path.addPolygon(polygon)<br>        <br>        pen = QtGui.QPen(color)<br>        pen.setWidth(width)<br>        new_item = QtWidgets.QGraphicsPathItem(path, <span class="hljs-literal">None</span>)<br>        new_item.setPath(path)<br>        new_item.setPen(pen)<br>        self.scene_map.addItem(new_item)<br><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="问题2：画出来的polyline不够平滑，不好看"><a href="#问题2：画出来的polyline不够平滑，不好看" class="headerlink" title="问题2：画出来的polyline不够平滑，不好看"></a>问题2：画出来的polyline不够平滑，不好看</h3><p>用上述方式画出的图如下所示：</p>
-<img src="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/1.jpg" srcset="/img/loading.gif" lazyload class="" title="fig:1">
+<h3 id="问题2：画出来的polyline不够平滑，有锯齿"><a href="#问题2：画出来的polyline不够平滑，有锯齿" class="headerlink" title="问题2：画出来的polyline不够平滑，有锯齿"></a>问题2：画出来的polyline不够平滑，有锯齿</h3><p>用上述方式画出的图如下图左图所示：斜线会有锯齿，只有完全水平或竖直或45度的线才是粗细均匀的。</p>
+<img src="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/1.png" srcset="/img/loading.gif" lazyload class="" title="fig:1">
 
-<p>为了平滑线段，可以给<code>QGraphicsview</code>设置渲染的参数，<code>setRenderHint</code>。在<code>__init__</code>函数里加入下面一行：</p>
+<p>为了平滑线段，可以给<code>QGraphicsview</code>设置渲染的参数<code>setRenderHint</code>为antialiasing（抗锯齿）。在<code>__init__</code>函数里加入下面一行：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">self.setRenderHint(QtGui.QPainter.Antialiasing, <span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
 
-<p>得到的结果如下：</p>
-<img src="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/2.png" srcset="/img/loading.gif" lazyload class="" title="fig:1">
+<p>得到的结果如上面右图所示，可以看到没有锯齿了。</p>
+<h3 id="问题3：拖拽时view无法超过scene的大小"><a href="#问题3：拖拽时view无法超过scene的大小" class="headerlink" title="问题3：拖拽时view无法超过scene的大小"></a>问题3：拖拽时view无法超过scene的大小</h3><p>设置滚轮放大缩小功能需要重写wheelEvent函数，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">wheelEvent</span>(<span class="hljs-params">self, event: QtGui.QWheelEvent</span>) -&amp;gt; <span class="hljs-literal">None</span>:<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(self.scene().items()) == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span><br><br>    curPoint = event.position()<br>    scenePos = self.mapToScene(QPoint(curPoint.x(), curPoint.y()))<br><br>    viewWidth = self.viewport().width()<br>    viewHeight = self.viewport().height()<br><br>    hScale = curPoint.x() / viewWidth<br>    vScale = curPoint.y() / viewHeight<br><br>    wheelDeltaValue = event.angleDelta().y()<br>    self.scaleFactor = self.transform().m11()<br>    <span class="hljs-keyword">if</span> (self.scaleFactor &amp;lt; <span class="hljs-number">0.05</span> <span class="hljs-keyword">and</span> wheelDeltaValue&amp;lt;<span class="hljs-number">0</span>) <span class="hljs-keyword">or</span> (self.scaleFactor&amp;gt;<span class="hljs-number">50</span> <span class="hljs-keyword">and</span> wheelDeltaValue&amp;gt;<span class="hljs-number">0</span>):<br>        <span class="hljs-keyword">return</span><br><br>    <span class="hljs-keyword">if</span> wheelDeltaValue &amp;gt; <span class="hljs-number">0</span>:<br>        self.scale(<span class="hljs-number">1.1</span>, <span class="hljs-number">1.1</span>)<br>    <span class="hljs-keyword">else</span>:<br>        self.scale(<span class="hljs-number">1.0</span>/<span class="hljs-number">1.1</span>, <span class="hljs-number">1.0</span>/<span class="hljs-number">1.1</span>)<br>    <br>    viewPoint = self.transform().<span class="hljs-built_in">map</span>(scenePos)<br>    self.horizontalScrollBar().setValue(<span class="hljs-built_in">int</span>(viewPoint.x() - viewWidth * hScale ))<br>    self.verticalScrollBar().setValue(<span class="hljs-built_in">int</span>(viewPoint.y() - viewHeight * vScale ))<br><br>    self.update()<br></code></pre></td></tr></table></figure>
 
-<p>可以看到没有那些突兀的转折了。</p>
+<p>设置鼠标拖拽功能只需要给QGraphicsView设置setDragMode，在window类初始化时加入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">self.setDragMode(QtWidgets.QGraphicsView.ScrollHandDrag)<br></code></pre></td></tr></table></figure>
+
+<p>但在显示底图时由于图比较大，我并不想一开始显示全部，而只是显示一部分，如下图（1）。此时我的拖拽功能只在相比原始scene放大时才有用（在图（2）时可以拖拽）。当地图缩小后尽管还未显示地图全貌，但无法拖动（图（3）无法拖动）。</p>
+<img src="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/1.png" srcset="/img/loading.gif" lazyload class="" title="fig:1">
+
+
+<p>参考这个回答：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/55007339/allow-qgraphicsview-to-move-outside-scene">https://stackoverflow.com/questions/55007339/allow-qgraphicsview-to-move-outside-scene</a></p>
+<p>一个简单粗暴的解决方法是给scene设置足够大的初始大小。在我的例子中我将大小改为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">self.scene_map.setSceneRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2000</span>, <span class="hljs-number">2000</span>)<br></code></pre></td></tr></table></figure>
+
+<p>这样就可以在上图（3）仍然可以拖动。不过修改scene_map的大小后要注意原本点的位置的按照scene_map的大小移动。由于<code>QGraphicsScene</code>默认是中心和<code>QGraphicsView</code>对齐的，如scene_map大小设为(2000,2000)，那么此时scene中心点的坐标(1000,1000)会显示在view的中心。</p>
 
                 
               </div>
@@ -424,7 +437,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>pyside6使用过程中的问题记录</div>
+      <div>pyside6应用过程中的问题记录</div>
       <div>https://sisyphus-99.github.io/2023/09/19/pyside6使用问题记录/</div>
     </div>
     <div class="license-meta">
