@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://sisyphus-99.github.io/2023/09/19/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/5.png">
 <meta property="og:image" content="https://sisyphus-99.github.io/2023/09/19/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/6.png">
 <meta property="article:published_time" content="2023-09-19T12:17:29.000Z">
-<meta property="article:modified_time" content="2023-09-23T07:13:14.688Z">
+<meta property="article:modified_time" content="2023-09-23T07:24:04.731Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://sisyphus-99.github.io/2023/09/19/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/1.png">
@@ -324,7 +324,7 @@
         aria-expanded="true"
       >
         SLAM
-        <span class="list-group-count">(2)</span>
+        <span class="list-group-count">(3)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -342,6 +342,15 @@
            class="list-group-item list-group-item-action
            active">
           <span class="category-post">LOAM论文与代码阅读（一）激光里程计</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB2/" title="LOAM论文与代码阅读（二）建图"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">LOAM论文与代码阅读（二）建图</span>
         </a>
       
     
@@ -469,12 +478,12 @@
 <p>$$ d_H &#x3D;  \frac{\left| \begin{matrix} (\widetilde{X}^L_{(k+1,i)}-\overline{X}^L_{(k,j)}) \ ((\overline{X}^L_{(k,j)}-\overline{X}^L_{(k,l)})\times (\overline{X}^L_{(k,l)}-\overline {X}^L_{(k,m)})) \end{matrix} \right| }{|(\overline{X}^L_{(k,j)}-\overline{X}^L_{(k,l)})\times (\overline{X}^L_{(k,l)}-\overline {X}^L_{(k,m)})|} $$</p>
 <p><font color=gray>为了更快找最近邻，$\overline{P}_k$是以3D kd-tree存储的</font></p>
 <h4 id="位姿优化"><a href="#位姿优化" class="headerlink" title="位姿优化"></a>位姿优化</h4><p>对于边缘点，我们可以得到损失函数：</p>
-<p>$$f <em>\varepsilon  (  X</em> {(k+1,i)}^ {L}  ,  T_ {k+1}^ {L} )&#x3D;d_\varepsilon ,i \in \varepsilon_ {k+1} $$</p>
+<p>$$ f <em>\varepsilon  (  X</em> {(k+1,i)}^ {L}  ,  T_ {k+1}^ {L} )&#x3D;d_\varepsilon ,i \in \varepsilon_ {k+1} $$</p>
 <p>对于平面点，我们可以得到损失函数：</p>
-<p>$$f <em>H  (  X</em> {(k+1,i)}^ {L}  ,  T_ {k+1}^ {L} )&#x3D;d_H ,i \in H_ {k+1} $$</p>
+<p>$$ f_H  (  X_{(k+1,i)}^ {L}  ,  T_ {k+1}^ {L} )&#x3D;d_H ,i \in H_ {k+1} $$</p>
 <p>把这些损失放在一起，可以得到：</p>
-<p>$$\bold{f}(T_{k+1}^L) &#x3D; \bold{d}$$</p>
-<p>其中$\bold{d}$的每一行都是一个特征点的损失。我们可以计算f相对于T的雅可比矩阵J，然后用LM算法来优化。在优化时每行损失分配了不同的权重，匹配距离大的点权重更小，匹配距离大于一定值的点权重为0（被认为是误匹配）。也就是Bisquare weights, 根据每一项损失当前的大小分配权重，优先去降低小的损失项，减轻大的损失项的影响。这种方式更加鲁棒。这部分在代码中是用ceres来实现的。</p>
+<p>$$ \bold{f}(T_{k+1}^L) &#x3D; \bold{d} $$</p>
+<p>其中 $\bold{d}$ 的每一行都是一个特征点的损失。我们可以计算f相对于T的雅可比矩阵J，然后用LM算法来优化。在优化时每行损失分配了不同的权重，匹配距离大的点权重更小，匹配距离大于一定值的点权重为0（被认为是误匹配）。也就是Bisquare weights, 根据每一项损失当前的大小分配权重，优先去降低小的损失项，减轻大的损失项的影响。这种方式更加鲁棒。这部分在代码中是用ceres来实现的。</p>
 
                 
               </div>
