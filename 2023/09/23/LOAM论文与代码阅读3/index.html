@@ -16,21 +16,21 @@
   <meta name="author" content="sisyphus">
   <meta name="keywords" content="">
   
-    <meta name="description" content="LOAM，激光建图">
+    <meta name="description" content="LOAM，IMU，运动补偿">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LOAM论文与代码阅读（二）建图">
-<meta property="og:url" content="https://sisyphus-99.github.io/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB2/index.html">
+<meta property="og:title" content="LOAM论文与代码阅读（三）IMU运动补偿相关代码">
+<meta property="og:url" content="https://sisyphus-99.github.io/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB3/index.html">
 <meta property="og:site_name" content="My Rock">
-<meta property="og:description" content="LOAM，激光建图">
+<meta property="og:description" content="LOAM，IMU，运动补偿">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-09-23T07:20:29.000Z">
-<meta property="article:modified_time" content="2023-09-24T06:45:17.683Z">
+<meta property="article:published_time" content="2023-09-23T14:46:29.000Z">
+<meta property="article:modified_time" content="2023-09-24T06:35:43.625Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LOAM论文与代码阅读（二）建图 - My Rock</title>
+  <title>LOAM论文与代码阅读（三）IMU运动补偿相关代码 - My Rock</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -225,7 +225,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LOAM论文与代码阅读（二）建图"></span>
+            <span id="subtitle" data-typed-text="LOAM论文与代码阅读（三）IMU运动补偿相关代码"></span>
           
         </div>
 
@@ -236,7 +236,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-23 15:20" pubdate>
+        <time datetime="2023-09-23 22:46" pubdate>
           September 23, 2023 pm
         </time>
       </span>
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          5.4k words
         
       </span>
     
@@ -259,7 +259,7 @@
         
         
         
-          10 mins
+          46 mins
         
       </span>
     
@@ -351,7 +351,7 @@
       
         <a href="/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB3/" title="LOAM论文与代码阅读（三）IMU运动补偿相关代码"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">LOAM论文与代码阅读（三）IMU运动补偿相关代码</span>
         </a>
       
@@ -360,7 +360,7 @@
       
         <a href="/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB2/" title="LOAM论文与代码阅读（二）建图"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">LOAM论文与代码阅读（二）建图</span>
         </a>
       
@@ -392,58 +392,61 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">LOAM论文与代码阅读（二）建图</h1>
+            <h1 id="seo-header">LOAM论文与代码阅读（三）IMU运动补偿相关代码</h1>
             
             
               <div class="markdown-body">
                 
                 <div class="note note-primary">
-            <p>上一篇学习了LOAM的里程计。里程计输入原始点云，得到了去畸变的点云和帧间位姿。但帧间位姿不断递推会导致误差不断积累，因此我们需要将帧（单帧或多帧）与地图进行匹配来优化位姿，同时建立全局地图。本篇就来学习LOAM中后端优化建图的过程。</p>
+            <p>LOAM代码中使用的是IMU进行运动补偿。这部分在思想上比较简单，即用IMU积分得到各个点相对开始时刻的位姿。但实际上涉及一些坐标系转换，积分，时间戳问题，因此对代码进一步阅读。</p>
           </div>
-<h3 id="整体流程">整体流程</h3>
-<p>建图的整体流程如下：</p>
-<p>建图的算法对每个sweep运行一次。</p>
-<p>输入：在第k+1个sweep结束时，我们得到了去畸变的点云 <span
-class="math inline">\(\overline{P}_{k+1}\)</span>,
-和这一帧相对于上一帧的变换 <span
-class="math inline">\(T^L_{k+1}\)</span>。同时我们有一个地图<span
-class="math inline">\(Q_k\)</span>，是由前k帧建立的全局地图点云，和上一帧建图时估计的位姿<span
-class="math inline">\(T_k^W\)</span>，即<span
-class="math inline">\(t_k\)</span>时刻lidar相对于世界坐标系的位姿。（世界坐标系即为<span
-class="math inline">\(Q_k\)</span>建立的坐标系，常使用第一帧的坐标系作为世界坐标系）</p>
-<p>输出：<span class="math inline">\(T_{k+1}^W\)</span></p>
-<p>方法：根据<span class="math inline">\(T_k^W\)</span>和<span
-class="math inline">\(T^L_{k+1}\)</span>，我们可以得到<span
-class="math inline">\(T_{k+1}^W\)</span>的一个估计值。用这个值我们将<span
-class="math inline">\(\overline{P}_{k+1}\)</span>投影到世界坐标系，用<span
-class="math inline">\(\overline{Q}_{k+1}\)</span>表示。把<span
-class="math inline">\(\overline{Q}_{k+1}\)</span>与地图<span
-class="math inline">\(Q_k\)</span>匹配，就可以优化位姿<span
-class="math inline">\(T_{k+1}^W\)</span>了。</p>
-<h3 id="具体细节">具体细节</h3>
-<ol type="1">
-<li>提取特征点的方式与里程计相同，但是提取更多的特征点（10倍）。</li>
-</ol>
-<div class="note note-success">
-            <p>由于地图更稠密，而且建图运行频率低，所以可以提取更多特征点？而且建图需要得到一个更准确的位姿估计。</p>
+<h3 id="imu数据处理">IMU数据处理</h3>
+<p>对于发布的IMU消息，首先还原加速度，然后利用加速度积分得到当前imu的速度，位置，而姿态可以直接使用，存成IMUState，加入队列。</p>
+<p><font color=gray>IMU设置后一般可以直接输出四元数，由加速度积分得到。但不会输出速度，因为加速度不准，积分很容易发散。</font></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">// 传入IMU消息</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">ScanRegistration::handleIMUMessage</span><span class="hljs-params">(<span class="hljs-type">const</span> sensor_msgs::Imu::ConstPtr&amp; imuIn)</span> <span class="hljs-comment">// imuIn的结构--1</span></span><br><span class="hljs-function"></span>&#123;<br>  tf::Quaternion orientation;<br>  tf::<span class="hljs-built_in">quaternionMsgToTF</span>(imuIn-&gt;orientation, orientation);<br>  <span class="hljs-type">double</span> roll, pitch, yaw;<br>  tf::<span class="hljs-built_in">Matrix3x3</span>(orientation).<span class="hljs-built_in">getRPY</span>(roll, pitch, yaw); <span class="hljs-comment">//将IMU的姿态转roll,pitch,yaw</span><br><br>  Vector3 acc;<br>  acc.<span class="hljs-built_in">x</span>() = <span class="hljs-built_in">float</span>(imuIn-&gt;linear_acceleration.y - <span class="hljs-built_in">sin</span>(roll) * <span class="hljs-built_in">cos</span>(pitch) * <span class="hljs-number">9.81</span>);<br>  acc.<span class="hljs-built_in">y</span>() = <span class="hljs-built_in">float</span>(imuIn-&gt;linear_acceleration.z - <span class="hljs-built_in">cos</span>(roll) * <span class="hljs-built_in">cos</span>(pitch) * <span class="hljs-number">9.81</span>);<br>  acc.<span class="hljs-built_in">z</span>() = <span class="hljs-built_in">float</span>(imuIn-&gt;linear_acceleration.x + <span class="hljs-built_in">sin</span>(pitch)             * <span class="hljs-number">9.81</span>); <span class="hljs-comment">//减去重力得到真实的加速度--2</span><br><br>  IMUState newState; <span class="hljs-comment">// IMUState的结构--3</span><br>  newState.stamp = <span class="hljs-built_in">fromROSTime</span>( imuIn-&gt;header.stamp);<br>  newState.roll = roll;<br>  newState.pitch = pitch;<br>  newState.yaw = yaw;<br>  newState.acceleration = acc;<br><br>  <span class="hljs-built_in">updateIMUData</span>(acc, newState); <span class="hljs-comment">// 将新的IMU状态更新到全局信息中--4</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="imu消息的结构">1 imu消息的结构</h4>
+<p>ROS中<code>sensor_msgs::Imu</code>的定义：包含一个四元数表示姿态，角速度和加速度为三维向量</p>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs nim"><span class="hljs-type">Header</span> header<br><br>geometry_msgs/<span class="hljs-type">Quaternion</span> orientation<br><span class="hljs-type">float64</span>[<span class="hljs-number">9</span>] orientation_covariance <span class="hljs-comment"># Row major about x, y, z axes</span><br><br>geometry_msgs/<span class="hljs-type">Vector3</span> angular_velocity<br><span class="hljs-type">float64</span>[<span class="hljs-number">9</span>] angular_velocity_covariance <span class="hljs-comment"># Row major about x, y, z axes</span><br><br>geometry_msgs/<span class="hljs-type">Vector3</span> linear_acceleration<br><span class="hljs-type">float64</span>[<span class="hljs-number">9</span>] linear_acceleration_covariance<br></code></pre></td></tr></table></figure>
+<h4 id="减去重力得到真实的加速度">2 减去重力得到真实的加速度</h4>
+<p>由于IMU测量的是比力，在物体静止时会测量到一个垂直向上，大小为g的加速度，因此测量值需要减去<strong>g</strong>。但由于IMU在车辆运动中跟随车辆旋转，我们需要先将世界坐标系下的
+<span class="math inline">\(\textbf{g}=[0,0,9.8]\)</span>
+用orientation转换到当前IMU坐标系下，即：</p>
+<p><span class="math display">\[ a_ {true} &#39;=a &#39;_ {measure}
+-  R_ {ZYX}  *\textbf{g} = \left [\begin{matrix}a_{x}&#39;\\ a_{y}&#39;
+\\ a_{z}&#39; \end{matrix} \right ] - \left [\begin{matrix}-sin(p)g \\
+sin(r)cos(p)g \\ cos(r)cos(p)g \end{matrix} \right ]
+\]</span></p>
+<h4 id="imustate的结构">3 IMUState的结构</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">IMUState</span><br>  &#123;<br>    Time stamp;<br>    Angle roll;<br>    Angle pitch;<br>    Angle yaw;<br><br>    Vector3 position; <span class="hljs-comment">// IMU在世界坐标系的位置</span><br><br>    Vector3 velocity; <span class="hljs-comment">// IMU相对于世界坐标系的速度</span><br><br>    Vector3 acceleration; <br><br>    <span class="hljs-comment">// 一个插值函数，输入一个IMU开始状态，一个结束状态，一个插值的位置比例，输出插值得到的IMU状态</span><br>    <span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">interpolate</span><span class="hljs-params">(<span class="hljs-type">const</span> IMUState&amp; start,</span></span><br><span class="hljs-params"><span class="hljs-function">      <span class="hljs-type">const</span> IMUState&amp; end,</span></span><br><span class="hljs-params"><span class="hljs-function">      <span class="hljs-type">const</span> <span class="hljs-type">float</span>&amp; ratio,</span></span><br><span class="hljs-params"><span class="hljs-function">      IMUState&amp; result)</span></span><br><span class="hljs-function">    </span>&#123;<br>      <span class="hljs-type">float</span> invRatio = <span class="hljs-number">1</span> - ratio;<br><br>      result.roll = start.roll.<span class="hljs-built_in">rad</span>() * invRatio + end.roll.<span class="hljs-built_in">rad</span>() * ratio;<br>      result.pitch = start.pitch.<span class="hljs-built_in">rad</span>() * invRatio + end.pitch.<span class="hljs-built_in">rad</span>() * ratio;<br>      <span class="hljs-keyword">if</span> (start.yaw.<span class="hljs-built_in">rad</span>() - end.yaw.<span class="hljs-built_in">rad</span>() &gt; M_PI)<br>      &#123;<br>        result.yaw = start.yaw.<span class="hljs-built_in">rad</span>() * invRatio + (end.yaw.<span class="hljs-built_in">rad</span>() + <span class="hljs-number">2</span> * M_PI) * ratio;<br>      &#125;<br>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (start.yaw.<span class="hljs-built_in">rad</span>() - end.yaw.<span class="hljs-built_in">rad</span>() &lt; -M_PI)<br>      &#123;<br>        result.yaw = start.yaw.<span class="hljs-built_in">rad</span>() * invRatio + (end.yaw.<span class="hljs-built_in">rad</span>() - <span class="hljs-number">2</span> * M_PI) * ratio;<br>      &#125;<br>      <span class="hljs-keyword">else</span><br>      &#123;<br>        result.yaw = start.yaw.<span class="hljs-built_in">rad</span>() * invRatio + end.yaw.<span class="hljs-built_in">rad</span>() * ratio;<br>      &#125;<br><br>      result.velocity = start.velocity * invRatio + end.velocity * ratio;<br>      result.position = start.position * invRatio + end.position * ratio;<br>    &#125;;<br>  &#125; IMUState;<br></code></pre></td></tr></table></figure>
+<h4 id="将新的imu状态更新到全局信息中">4
+将新的IMU状态更新到全局信息中</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">BasicScanRegistration::updateIMUData</span><span class="hljs-params">(Vector3&amp; acc, IMUState&amp; newState)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">if</span> (_imuHistory.<span class="hljs-built_in">size</span>() &gt; <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-comment">// 把加速度转到世界坐标系下</span><br>    <span class="hljs-built_in">rotateZXY</span>(acc, newState.roll, newState.pitch, newState.yaw);<br><br>    <span class="hljs-comment">// 对位置和速度进行积分</span><br>    <span class="hljs-type">const</span> IMUState&amp; prevState = _imuHistory.<span class="hljs-built_in">last</span>();<br>    <span class="hljs-type">float</span> timeDiff = <span class="hljs-built_in">toSec</span>(newState.stamp - prevState.stamp);<br>    newState.position = prevState.position<br>                        + (prevState.velocity * timeDiff)<br>                        + (<span class="hljs-number">0.5</span> * acc * timeDiff * timeDiff);<br>    newState.velocity = prevState.velocity<br>                        + acc * timeDiff;<br>  &#125;<br><br>  _imuHistory.<span class="hljs-built_in">push</span>(newState); <span class="hljs-comment">// 推入_imuHistory队列</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里根据当前的加速度，前一个时刻的速度对位置和时间做了积分</p>
+<p><span class="math display">\[p_{new} = p_{pre} + v_{prev} * \Delta t
++ \frac{1}{2} a (\Delta t)^2\]</span></p>
+<p><span class="math display">\[v_{new} = v_{pre} + a \Delta
+t\]</span></p>
+<div class="note note-danger">
+            <p>问题1：对加速度做2次积分应该不太准吧，代码中有用反馈信息来纠正吗？</p>
           </div>
-<ol start="2" type="1">
-<li><p>对于地图中大量的点云如果全部存储成kd-tree，树的深度很大，不易存储。地图首先被划分成10m的体素格，再将与当前<span
-class="math inline">\(\overline{Q}_{k+1}\)</span>有重叠区域的体素格中的点存成kd-tree.</p></li>
-<li><p>对于<span
-class="math inline">\(\overline{Q}_{k+1}\)</span>中的一个特征点i，我们先找在<span
-class="math inline">\(Q_k\)</span>中在i附近一定区域内的点，设这些点构成集合S'。如果i是边缘点，我们只保留S'中的边缘点。如果i是平面点，我们只保留S中的平面点。</p></li>
-<li><p>然后我们计算S'的协方差矩阵为M。计算M的特征值和特征向量得到V和E。如果i是边缘点，S'应对应一条边缘线，它的特征值应该有1个显著大于另外两个，对应的特征向量代表了这条边缘线的方向。如果i是平面点，S'应对应一个平面，它的特征值应该有2个显著大于另外1个，对应的两个特征向量代表了这个平面的方向。</p></li>
-<li><p>然后我们取边缘线上的两个点，平面上的三个点，用和里程计里同样的方式计算距离。得到有关外参<span
-class="math inline">\(T^W_{k+1}\)</span>的损失函数。同样用鲁棒拟合（bisquare
-weight）和LM方法来优化。</p></li>
-<li><p>优化完成后，我们把第k+1帧点云加入地图。为了使得地图上的点均匀分布，对地图做5cm的体素降采样。</p></li>
-</ol>
-<h3 id="loam的不足之处">LOAM的不足之处</h3>
-<ol type="1">
-<li>LOAM整体流程比较繁琐，计算消耗大。每一帧都存入地图，在后期内存需求很大</li>
-<li>没有后端优化，没有回环检测</li>
-</ol>
+<h3 id="运动补偿">运动补偿</h3>
+<p>把点云投影到这一帧开始时刻:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">BasicScanRegistration::projectPointToStartOfSweep</span><span class="hljs-params">(pcl::PointXYZI&amp; point, <span class="hljs-type">float</span> relTime)</span> <span class="hljs-comment">//relTime: 该点相对于这个scan初始时刻的时间</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">hasIMUData</span>()) <span class="hljs-comment">// hasIMUData: _imuHistory.size() &gt; 0</span><br>  &#123;<br>    <span class="hljs-built_in">setIMUTransformFor</span>(relTime); <span class="hljs-comment">// 计算该点相对于这一sweep初始时刻的位姿--1</span><br>    <span class="hljs-built_in">transformToStartIMU</span>(point); <span class="hljs-comment">// 把该点投影到这一sweep初始时刻--2</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="计算该点相对于这一sweep初始时刻的位姿">1
+计算该点相对于这一sweep初始时刻的位姿</h4>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">BasicScanRegistration::setIMUTransformFor</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">float</span>&amp; relTime)</span> </span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-built_in">interpolateIMUStateFor</span>(relTime, _imuCur); <span class="hljs-comment">// 获得relTime时间的IMU状态</span><br><br>  <span class="hljs-type">float</span> relSweepTime = <span class="hljs-built_in">toSec</span>(_scanTime - _sweepStart) + relTime; <span class="hljs-comment">//在代码中_sweepStart设为_scanTime,所以这里就是relTime</span><br>  _imuPositionShift = _imuCur.position - _imuStart.position - _imuStart.velocity * relSweepTime; <span class="hljs-comment">// ??</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>获得relTime时间的IMU状态</strong></p>
+<p>找到当前时刻之后最近的一帧IMU，用这一帧IMU和前一帧插值得到relTime时间的IMU状态：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">BasicScanRegistration::interpolateIMUStateFor</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">float</span> &amp;relTime, IMUState &amp;outputState)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-type">double</span> timeDiff = <span class="hljs-built_in">toSec</span>(_scanTime - _imuHistory[_imuIdx].stamp) + relTime; <span class="hljs-comment">// 要补偿的点和当前的IMU帧（IMU根据用的需要idx不断往后加）的时间差</span><br>  <span class="hljs-keyword">while</span> (_imuIdx &lt; _imuHistory.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span> &amp;&amp; timeDiff &gt; <span class="hljs-number">0</span>) &#123;<br>    _imuIdx++;<br>    timeDiff = <span class="hljs-built_in">toSec</span>(_scanTime - _imuHistory[_imuIdx].stamp) + relTime;<br>  &#125; <span class="hljs-comment">// 当这个IMU时间戳超过我们要补偿的点的时间时，停止</span><br><br>  <span class="hljs-keyword">if</span> (_imuIdx == <span class="hljs-number">0</span> || timeDiff &gt; <span class="hljs-number">0</span>) &#123;<br>    outputState = _imuHistory[_imuIdx];<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-type">float</span> ratio = -timeDiff / <span class="hljs-built_in">toSec</span>(_imuHistory[_imuIdx].stamp - _imuHistory[_imuIdx - <span class="hljs-number">1</span>].stamp);<br>    IMUState::<span class="hljs-built_in">interpolate</span>(_imuHistory[_imuIdx], _imuHistory[_imuIdx - <span class="hljs-number">1</span>], ratio, outputState);<br>  &#125; <span class="hljs-comment">// 用这一帧IMU和上一帧IMU插值得到这个时刻的IMU状态</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="note note-danger">
+            <p>问题2：_imuPositionShift为什么是当前位置-(scan开始位置+开始速度*relTime)。_imuStart看代码scan开始时的imu状态。那_imuPositionShift就是由加速运动导致的点的位置偏移？</p>
+          </div>
+<h4 id="把该点投影到scan初始时刻">2 把该点投影到scan初始时刻</h4>
+<p>先把点转换到全局坐标系，只加入由加速度得到的偏移？再旋转回初始时刻的imu局部坐标系</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">BasicScanRegistration::transformToStartIMU</span><span class="hljs-params">(pcl::PointXYZI&amp; point)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-comment">// 把点旋转到全局坐标系</span><br>  <span class="hljs-built_in">rotateZXY</span>(point, _imuCur.roll, _imuCur.pitch, _imuCur.yaw);<br><br>  <span class="hljs-comment">// 加入平移？</span><br>  point.x += _imuPositionShift.<span class="hljs-built_in">x</span>();<br>  point.y += _imuPositionShift.<span class="hljs-built_in">y</span>();<br>  point.z += _imuPositionShift.<span class="hljs-built_in">z</span>();<br><br>  <span class="hljs-comment">// rotate point back to local IMU system relative to the start IMU state</span><br>  <span class="hljs-built_in">rotateYXZ</span>(point, -_imuStart.yaw, -_imuStart.pitch, -_imuStart.roll);<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="note note-danger">
+            <p>问题3：这里两次旋转相对于对姿态做了补偿，但是平移方向是只对加速度产生偏差做补偿？</p>
+          </div>
 
                 
               </div>
@@ -482,8 +485,8 @@ weight）和LM方法来优化。</p></li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LOAM论文与代码阅读（二）建图</div>
-      <div>https://sisyphus-99.github.io/2023/09/23/LOAM论文与代码阅读2/</div>
+      <div>LOAM论文与代码阅读（三）IMU运动补偿相关代码</div>
+      <div>https://sisyphus-99.github.io/2023/09/23/LOAM论文与代码阅读3/</div>
     </div>
     <div class="license-meta">
       
@@ -527,18 +530,12 @@ weight）和LM方法来优化。</p></li>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/" title="LEGO-LOAM论文与代码阅读">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LEGO-LOAM论文与代码阅读</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" title="pyside6应用过程中的问题记录">
-                        <span class="hidden-mobile">pyside6应用过程中的问题记录</span>
+                      <a href="/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/" title="LEGO-LOAM论文与代码阅读">
+                        <span class="hidden-mobile">LEGO-LOAM论文与代码阅读</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

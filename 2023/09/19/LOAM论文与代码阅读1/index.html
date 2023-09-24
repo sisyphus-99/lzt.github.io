@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://sisyphus-99.github.io/2023/09/19/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/5.png">
 <meta property="og:image" content="https://sisyphus-99.github.io/2023/09/19/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/6.png">
 <meta property="article:published_time" content="2023-09-19T12:17:29.000Z">
-<meta property="article:modified_time" content="2023-09-23T09:03:46.382Z">
+<meta property="article:modified_time" content="2023-09-24T06:41:44.277Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://sisyphus-99.github.io/2023/09/19/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/1.png">
@@ -324,7 +324,7 @@
         aria-expanded="true"
       >
         SLAM
-        <span class="list-group-count">(3)</span>
+        <span class="list-group-count">(5)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -338,10 +338,28 @@
     
       
       
+        <a href="/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/" title="LEGO-LOAM论文与代码阅读"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">LEGO-LOAM论文与代码阅读</span>
+        </a>
+      
+    
+      
+      
         <a href="/2023/09/19/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/" title="LOAM论文与代码阅读（一）激光里程计"
            class="list-group-item list-group-item-action
            active">
           <span class="category-post">LOAM论文与代码阅读（一）激光里程计</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB3/" title="LOAM论文与代码阅读（三）IMU运动补偿相关代码"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">LOAM论文与代码阅读（三）IMU运动补偿相关代码</span>
         </a>
       
     
@@ -416,9 +434,9 @@ class="math inline">\(X_{(k,i)}^L\)</span>是第k个sweep中第i个点在LiDAR�
 <p>对应ALOAM中的代码</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">// 取每个点前后5个点，算x,y,z方向的差</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">5</span>; i &lt; cloudSize - <span class="hljs-number">5</span>; i++)<br>&#123; <br>    <span class="hljs-type">float</span> diffX = laserCloud-&gt;points[i - <span class="hljs-number">5</span>].x + laserCloud-&gt;points[i - <span class="hljs-number">4</span>].x + laserCloud-&gt;points[i - <span class="hljs-number">3</span>].x + laserCloud-&gt;points[i - <span class="hljs-number">2</span>].x + laserCloud-&gt;points[i - <span class="hljs-number">1</span>].x - <span class="hljs-number">10</span> * laserCloud-&gt;points[i].x + laserCloud-&gt;points[i + <span class="hljs-number">1</span>].x + laserCloud-&gt;points[i + <span class="hljs-number">2</span>].x + laserCloud-&gt;points[i + <span class="hljs-number">3</span>].x + laserCloud-&gt;points[i + <span class="hljs-number">4</span>].x + laserCloud-&gt;points[i + <span class="hljs-number">5</span>].x;<br>    <span class="hljs-type">float</span> diffY = laserCloud-&gt;points[i - <span class="hljs-number">5</span>].y + laserCloud-&gt;points[i - <span class="hljs-number">4</span>].y + laserCloud-&gt;points[i - <span class="hljs-number">3</span>].y + laserCloud-&gt;points[i - <span class="hljs-number">2</span>].y + laserCloud-&gt;points[i - <span class="hljs-number">1</span>].y - <span class="hljs-number">10</span> * laserCloud-&gt;points[i].y + laserCloud-&gt;points[i + <span class="hljs-number">1</span>].y + laserCloud-&gt;points[i + <span class="hljs-number">2</span>].y + laserCloud-&gt;points[i + <span class="hljs-number">3</span>].y + laserCloud-&gt;points[i + <span class="hljs-number">4</span>].y + laserCloud-&gt;points[i + <span class="hljs-number">5</span>].y;<br>    <span class="hljs-type">float</span> diffZ = laserCloud-&gt;points[i - <span class="hljs-number">5</span>].z + laserCloud-&gt;points[i - <span class="hljs-number">4</span>].z + laserCloud-&gt;points[i - <span class="hljs-number">3</span>].z + laserCloud-&gt;points[i - <span class="hljs-number">2</span>].z + laserCloud-&gt;points[i - <span class="hljs-number">1</span>].z - <span class="hljs-number">10</span> * laserCloud-&gt;points[i].z + laserCloud-&gt;points[i + <span class="hljs-number">1</span>].z + laserCloud-&gt;points[i + <span class="hljs-number">2</span>].z + laserCloud-&gt;points[i + <span class="hljs-number">3</span>].z + laserCloud-&gt;points[i + <span class="hljs-number">4</span>].z + laserCloud-&gt;points[i + <span class="hljs-number">5</span>].z;<br><br>    cloudCurvature[i] = diffX * diffX + diffY * diffY + diffZ * diffZ;<br>    cloudSortInd[i] = i;<br>    cloudNeighborPicked[i] = <span class="hljs-number">0</span>;<br>    cloudLabel[i] = <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>对一个scan的曲率按照c值排序，其中最大的n个点选择为edge点，最小的m个点为平面点。为了使得特征点分布更均匀，论文把一个scan平分为4个子区域，每个子区域最多选2个边缘点，4个平面点，边缘和平面有设定一个阈值（只有超过阈值才可能选为边缘点）。</p>
-<p>此外，还要去掉一些不可信赖的点： -
-附近已经有点选中了（避免特征点太集中） -
-局部平面和laser光束平行，如下图（a） -
+<p>此外，还要去掉一些不可信赖的点： (1)
+附近已经有点选中了（避免特征点太集中） (2)
+局部平面和laser光束平行，如下图（a） (3)
 在被遮挡的区域边缘的点，如下图（b）</p>
 <img src="/2023/09/19/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/4.png" srcset="/img/loading.gif" lazyload class="" title="fig:4">
 <p>这些点的删除方式是：当根据曲率得到特征点后，重新去看这些点用于计算曲率的点集S，需要保证S中的点没有被选中为特征点，点集构成的平面不与激光线平行，且点集中相邻点没有在激光方向上的出现距离的不连续。</p>
@@ -552,7 +570,8 @@ kd-tree存储的</font></p>
 <p>其中 <span class="math inline">\(\textbf{d}\)</span>
 的每一行都是一个特征点的损失。我们可以计算f相对于T的雅可比矩阵J，然后用LM算法来优化。在优化时每行损失分配了不同的权重，匹配距离大的点权重更小，匹配距离大于一定值的点权重为0（被认为是误匹配）。也就是Bisquare
 weights,
-根据每一项损失当前的大小分配权重，优先去降低小的损失项，减轻大的损失项的影响。这种方式更加鲁棒。这部分在代码中是用ceres来实现的。</p>
+根据每一项损失当前的大小分配权重，优先去降低小的损失项，减轻大的损失项的影响。这种方式更加鲁棒。</p>
+<p>这部分在代码中是用ceres来实现的，每一个残差项通过AddResidualBlock加入损失函数，调用优化器求解。</p>
 
                 
               </div>

@@ -16,21 +16,26 @@
   <meta name="author" content="sisyphus">
   <meta name="keywords" content="">
   
-    <meta name="description" content="LOAM，激光建图">
+    <meta name="description" content="LEGO-LOAM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LOAM论文与代码阅读（二）建图">
-<meta property="og:url" content="https://sisyphus-99.github.io/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB2/index.html">
+<meta property="og:title" content="LEGO-LOAM论文与代码阅读">
+<meta property="og:url" content="https://sisyphus-99.github.io/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/index.html">
 <meta property="og:site_name" content="My Rock">
-<meta property="og:description" content="LOAM，激光建图">
+<meta property="og:description" content="LEGO-LOAM">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-09-23T07:20:29.000Z">
-<meta property="article:modified_time" content="2023-09-24T06:45:17.683Z">
+<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/1.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/2.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/3.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/4.png">
+<meta property="article:published_time" content="2023-09-23T11:31:29.000Z">
+<meta property="article:modified_time" content="2023-09-24T13:33:37.243Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sisyphus-99.github.io/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/1.png">
   
   
   
-  <title>LOAM论文与代码阅读（二）建图 - My Rock</title>
+  <title>LEGO-LOAM论文与代码阅读 - My Rock</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -225,7 +230,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LOAM论文与代码阅读（二）建图"></span>
+            <span id="subtitle" data-typed-text="LEGO-LOAM论文与代码阅读"></span>
           
         </div>
 
@@ -236,7 +241,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-23 15:20" pubdate>
+        <time datetime="2023-09-23 19:31" pubdate>
           September 23, 2023 pm
         </time>
       </span>
@@ -248,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k words
+          5k words
         
       </span>
     
@@ -259,7 +264,7 @@
         
         
         
-          10 mins
+          42 mins
         
       </span>
     
@@ -333,7 +338,7 @@
       
         <a href="/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/" title="LEGO-LOAM论文与代码阅读"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">LEGO-LOAM论文与代码阅读</span>
         </a>
       
@@ -360,7 +365,7 @@
       
         <a href="/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB2/" title="LOAM论文与代码阅读（二）建图"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">LOAM论文与代码阅读（二）建图</span>
         </a>
       
@@ -392,57 +397,81 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">LOAM论文与代码阅读（二）建图</h1>
+            <h1 id="seo-header">LEGO-LOAM论文与代码阅读</h1>
             
             
               <div class="markdown-body">
                 
                 <div class="note note-primary">
-            <p>上一篇学习了LOAM的里程计。里程计输入原始点云，得到了去畸变的点云和帧间位姿。但帧间位姿不断递推会导致误差不断积累，因此我们需要将帧（单帧或多帧）与地图进行匹配来优化位姿，同时建立全局地图。本篇就来学习LOAM中后端优化建图的过程。</p>
+            <p>LeGO-LOAM 是对LOAM的一个改进。正如论文题目中Lightweight andGround-optimized,它的特点在于相比LOAM更加轻量，加了地面优化。尽管它在实际应用中出现较少，但其中的一些思想都是值得学习的。本文主要关注它相对于LOAM改进的地方，以及存在的不足之处。</p>
           </div>
-<h3 id="整体流程">整体流程</h3>
-<p>建图的整体流程如下：</p>
-<p>建图的算法对每个sweep运行一次。</p>
-<p>输入：在第k+1个sweep结束时，我们得到了去畸变的点云 <span
-class="math inline">\(\overline{P}_{k+1}\)</span>,
-和这一帧相对于上一帧的变换 <span
-class="math inline">\(T^L_{k+1}\)</span>。同时我们有一个地图<span
-class="math inline">\(Q_k\)</span>，是由前k帧建立的全局地图点云，和上一帧建图时估计的位姿<span
-class="math inline">\(T_k^W\)</span>，即<span
-class="math inline">\(t_k\)</span>时刻lidar相对于世界坐标系的位姿。（世界坐标系即为<span
-class="math inline">\(Q_k\)</span>建立的坐标系，常使用第一帧的坐标系作为世界坐标系）</p>
-<p>输出：<span class="math inline">\(T_{k+1}^W\)</span></p>
-<p>方法：根据<span class="math inline">\(T_k^W\)</span>和<span
-class="math inline">\(T^L_{k+1}\)</span>，我们可以得到<span
-class="math inline">\(T_{k+1}^W\)</span>的一个估计值。用这个值我们将<span
-class="math inline">\(\overline{P}_{k+1}\)</span>投影到世界坐标系，用<span
-class="math inline">\(\overline{Q}_{k+1}\)</span>表示。把<span
-class="math inline">\(\overline{Q}_{k+1}\)</span>与地图<span
-class="math inline">\(Q_k\)</span>匹配，就可以优化位姿<span
-class="math inline">\(T_{k+1}^W\)</span>了。</p>
-<h3 id="具体细节">具体细节</h3>
+<p>LeGO-LOAM主要解决的问题：原始LOAM对计算资源的需求大，在运动剧烈时不够鲁棒，特征不够稳定。</p>
+<h3 id="整体框架">整体框架</h3>
+<p>系统流程图如下：</p>
+<center>
+<img src="1.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+</center>
+<p>与LOAM是基本一致的，只是前面加了点云分割的步骤。但每一步实现的细节与LOAM也有差别，接下来我们具体看这些差别。</p>
+<h3 id="对loam的改进">对LOAM的改进</h3>
+<h4
+id="点云分割提取地面对非地面点云聚类">点云分割（提取地面，对非地面点云聚类）</h4>
+<p>首先把一帧点云投影成深度图，深度图的像素为1800*16。深度图每个位置的值是该点到lidar的距离。</p>
+<p><font color=gray>Velodyne16
+lidar，垂直方向是16线，水平方向是360/0.2=1800.</font></p>
+<p>论文里只是简单提到使用了一个按列评估的地面提取，来看一下代码里是怎么做的。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> j = <span class="hljs-number">0</span>; j &lt; _horizontal_scans; ++j) &#123;<br>  <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; _ground_scan_index; ++i) &#123;           <span class="hljs-comment">// 仅遍历方向朝下的scan</span><br>    <span class="hljs-type">size_t</span> lowerInd = j + (i)*_horizontal_scans;<br>    <span class="hljs-type">size_t</span> upperInd = j + (i + <span class="hljs-number">1</span>) * _horizontal_scans; <span class="hljs-comment">//相邻两个laser在同一列的点，也就是深度图的同一列的点</span><br><br>    <span class="hljs-keyword">if</span> (_full_cloud-&gt;points[lowerInd].intensity == <span class="hljs-number">-1</span> ||<br>        _full_cloud-&gt;points[upperInd].intensity == <span class="hljs-number">-1</span>) &#123;<br>      <span class="hljs-comment">// no info to check, invalid points</span><br>      _ground_mat(i, j) = <span class="hljs-number">-1</span>;<br>      <span class="hljs-keyword">continue</span>;<br>    &#125;<br><br>    <span class="hljs-type">float</span> dX =<br>        _full_cloud-&gt;points[upperInd].x - _full_cloud-&gt;points[lowerInd].x;<br>    <span class="hljs-type">float</span> dY =<br>        _full_cloud-&gt;points[upperInd].y - _full_cloud-&gt;points[lowerInd].y;<br>    <span class="hljs-type">float</span> dZ =<br>        _full_cloud-&gt;points[upperInd].z - _full_cloud-&gt;points[lowerInd].z;<br><br>    <span class="hljs-type">float</span> vertical_angle = std::<span class="hljs-built_in">atan2</span>(dZ , <span class="hljs-built_in">sqrt</span>(dX * dX + dY * dY + dZ * dZ));<br><br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> review this change, 判断前后两点的角度变化在10度内</span><br><br>    <span class="hljs-keyword">if</span> ( (vertical_angle - _sensor_mount_angle) &lt;= <span class="hljs-number">10</span> * DEG_TO_RAD) &#123;<br>      _ground_mat(i, j) = <span class="hljs-number">1</span>;<br>      _ground_mat(i + <span class="hljs-number">1</span>, j) = <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <ol type="1">
-<li>提取特征点的方式与里程计相同，但是提取更多的特征点（10倍）。</li>
+<li>假设激光雷达在一定高度水平安装，只有下面几条laser可能扫描到地面点。因此只遍历这几条线。</li>
+<li>取相邻两线在同一水平位置的点（也就是论文所说的按列评估），如下A,B两点</li>
 </ol>
-<div class="note note-success">
-            <p>由于地图更稠密，而且建图运行频率低，所以可以提取更多特征点？而且建图需要得到一个更准确的位姿估计。</p>
+<center>
+<img src="2.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+</center>
+<ol start="3" type="1">
+<li>如果两个点连线的垂直角度与lidar安装角度之差在10度以内，就认为是地面点。</li>
+</ol>
+<div class="note note-warning">
+            <p>这种判断方式过于简单，如果是低于激光雷达的其他平面也会被认为是地面。而且假设了雷达水平安装。但如果用RANSAC之类的提地面方法，耗时就太长了？</p>
           </div>
-<ol start="2" type="1">
-<li><p>对于地图中大量的点云如果全部存储成kd-tree，树的深度很大，不易存储。地图首先被划分成10m的体素格，再将与当前<span
-class="math inline">\(\overline{Q}_{k+1}\)</span>有重叠区域的体素格中的点存成kd-tree.</p></li>
-<li><p>对于<span
-class="math inline">\(\overline{Q}_{k+1}\)</span>中的一个特征点i，我们先找在<span
-class="math inline">\(Q_k\)</span>中在i附近一定区域内的点，设这些点构成集合S'。如果i是边缘点，我们只保留S'中的边缘点。如果i是平面点，我们只保留S中的平面点。</p></li>
-<li><p>然后我们计算S'的协方差矩阵为M。计算M的特征值和特征向量得到V和E。如果i是边缘点，S'应对应一条边缘线，它的特征值应该有1个显著大于另外两个，对应的特征向量代表了这条边缘线的方向。如果i是平面点，S'应对应一个平面，它的特征值应该有2个显著大于另外1个，对应的两个特征向量代表了这个平面的方向。</p></li>
-<li><p>然后我们取边缘线上的两个点，平面上的三个点，用和里程计里同样的方式计算距离。得到有关外参<span
-class="math inline">\(T^W_{k+1}\)</span>的损失函数。同样用鲁棒拟合（bisquare
-weight）和LM方法来优化。</p></li>
-<li><p>优化完成后，我们把第k+1帧点云加入地图。为了使得地图上的点均匀分布，对地图做5cm的体素降采样。</p></li>
-</ol>
-<h3 id="loam的不足之处">LOAM的不足之处</h3>
+<p>然后对非地面点云做聚类。这里论文也没有详细介绍，大致思想是从深度图上一个点出发，找上下左右四个点，如果点之间距离足够接近就聚为一类。直到所有点都有类别。看一下代码（这里是从一个点出发搜索完一类的过程）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">labelComponents</span><span class="hljs-params">(<span class="hljs-type">int</span> row, <span class="hljs-type">int</span> col)</span></span>&#123;<br>    <span class="hljs-comment">// use std::queue std::vector std::deque will slow the program down greatly</span><br>    <span class="hljs-type">float</span> d1, d2, alpha, angle;<br>    <span class="hljs-type">int</span> fromIndX, fromIndY, thisIndX, thisIndY; <br>    <span class="hljs-type">bool</span> lineCountFlag[N_SCAN] = &#123;<span class="hljs-literal">false</span>&#125;;<br><br>    queueIndX[<span class="hljs-number">0</span>] = row;<br>    queueIndY[<span class="hljs-number">0</span>] = col;<br>    <span class="hljs-type">int</span> queueSize = <span class="hljs-number">1</span>;<br>    <span class="hljs-type">int</span> queueStartInd = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> queueEndInd = <span class="hljs-number">1</span>;<br><br>    allPushedIndX[<span class="hljs-number">0</span>] = row;<br>    allPushedIndY[<span class="hljs-number">0</span>] = col;<br>    <span class="hljs-type">int</span> allPushedIndSize = <span class="hljs-number">1</span>;<br>    <br>    <span class="hljs-keyword">while</span>(queueSize &gt; <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-comment">// Pop point</span><br>        fromIndX = queueIndX[queueStartInd];<br>        fromIndY = queueIndY[queueStartInd];<br>        --queueSize;<br>        ++queueStartInd;<br>        <span class="hljs-comment">// 标记要pop的点的label</span><br>        labelMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">int</span>&gt;(fromIndX, fromIndY) = labelCount;<br>        <span class="hljs-comment">// Loop through all the neighboring grids of popped grid</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> iter = neighborIterator.<span class="hljs-built_in">begin</span>(); iter != neighborIterator.<span class="hljs-built_in">end</span>(); ++iter)&#123;<br>            <span class="hljs-comment">// new index</span><br>            thisIndX = fromIndX + (*iter).first;<br>            thisIndY = fromIndY + (*iter).second;<br>            <span class="hljs-comment">// index should be within the boundary</span><br>            <span class="hljs-keyword">if</span> (thisIndX &lt; <span class="hljs-number">0</span> || thisIndX &gt;= N_SCAN)<br>                <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-comment">// at range image margin (left or right side)</span><br>            <span class="hljs-keyword">if</span> (thisIndY &lt; <span class="hljs-number">0</span>)<br>                thisIndY = Horizon_SCAN - <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">if</span> (thisIndY &gt;= Horizon_SCAN)<br>                thisIndY = <span class="hljs-number">0</span>;<br>            <span class="hljs-comment">// prevent infinite loop (caused by put already examined point back)</span><br>            <span class="hljs-keyword">if</span> (labelMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">int</span>&gt;(thisIndX, thisIndY) != <span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">continue</span>;<br><br>            d1 = std::<span class="hljs-built_in">max</span>(rangeMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(fromIndX, fromIndY), <br>                            rangeMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(thisIndX, thisIndY));<br>            d2 = std::<span class="hljs-built_in">min</span>(rangeMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(fromIndX, fromIndY), <br>                            rangeMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">float</span>&gt;(thisIndX, thisIndY));<br><br>            <span class="hljs-keyword">if</span> ((*iter).first == <span class="hljs-number">0</span>)<br>                alpha = segmentAlphaX;<br>            <span class="hljs-keyword">else</span><br>                alpha = segmentAlphaY;<br><br>            angle = <span class="hljs-built_in">atan2</span>(d2*<span class="hljs-built_in">sin</span>(alpha), (d1 -d2*<span class="hljs-built_in">cos</span>(alpha)));<br><br>            <span class="hljs-keyword">if</span> (angle &gt; segmentTheta)&#123;<br><br>                queueIndX[queueEndInd] = thisIndX;<br>                queueIndY[queueEndInd] = thisIndY;<br>                ++queueSize;<br>                ++queueEndInd;<br><br>                labelMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">int</span>&gt;(thisIndX, thisIndY) = labelCount;<br>                lineCountFlag[thisIndX] = <span class="hljs-literal">true</span>;<br><br>                allPushedIndX[allPushedIndSize] = thisIndX;<br>                allPushedIndY[allPushedIndSize] = thisIndY;<br>                ++allPushedIndSize;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 点数少于30的类被认为无效</span><br>    <span class="hljs-type">bool</span> feasibleSegment = <span class="hljs-literal">false</span>;<br>    <span class="hljs-keyword">if</span> (allPushedIndSize &gt;= <span class="hljs-number">30</span>)<br>        feasibleSegment = <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (allPushedIndSize &gt;= segmentValidPointNum)&#123;<br>        <span class="hljs-type">int</span> lineCount = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; N_SCAN; ++i)<br>            <span class="hljs-keyword">if</span> (lineCountFlag[i] == <span class="hljs-literal">true</span>)<br>                ++lineCount;<br>        <span class="hljs-keyword">if</span> (lineCount &gt;= segmentValidLineNum)<br>            feasibleSegment = <span class="hljs-literal">true</span>;            <br>    &#125;<br>    <span class="hljs-comment">// segment is valid, mark these points</span><br>    <span class="hljs-keyword">if</span> (feasibleSegment == <span class="hljs-literal">true</span>)&#123;<br>        ++labelCount;<br>    &#125;<span class="hljs-keyword">else</span>&#123; <span class="hljs-comment">// segment is invalid, mark these points</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; allPushedIndSize; ++i)&#123;<br>            labelMat.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">int</span>&gt;(allPushedIndX[i], allPushedIndY[i]) = <span class="hljs-number">999999</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>聚类时相当于一种广度优先搜索。由于queue,vector结构会导致速度严重变慢，这里用静态数组queueIndX，queueIndY记录，然后用queueStartInd做标记</li>
+<li>点数少于30的类被认为无效。这里是为了去除像树叶等不稳定的点，防止被提取为特征点</li>
+<li>同一类原理：其中tang的角度越大，表明相邻的两个point越接近在一个平面上，故可认为是同一类</li>
+</ul>
+<center>
+<img src="3.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+</center>
+<h4 id="特征提取">特征提取</h4>
+<p>在特征提取阶段，LeGO-LOAM计算曲率的方式从LOAM的计算点的欧式距离改为只用深度：</p>
+<p><span class="math display">\[c=\frac{1}{|S|\cdot \|r_i\|} \|
+\sum _ {j \in s, j\neq i}( r_ {j}
+-r_ {i}) \| \]</span></p>
+<p>edge点只从非地面点中提取，在设置阈值c后，可以得到边缘点集<span
+class="math inline">\(\mathbb{F}_e\)</span>，这些点中c值最大的n(n=2)个点构成<span
+class="math inline">\(F_e\)</span>。平面点从地面和非地面点中提取，在设置阈值后得到点集<span
+class="math inline">\(\mathbb{F}_p\)</span>，这些点中c值最小的m（m=4）个点构成<span
+class="math inline">\(F_p\)</span></p>
+<h4 id="特征匹配">特征匹配</h4>
+<p>在特征匹配时，我们对这一帧的<span
+class="math inline">\(F^t_e,F^t_p\)</span>，在上一帧<span
+class="math inline">\(\mathbb{F}^{t-1}_e,\mathbb{F}^{t-1}_p\)</span>中找匹配点，而不是在所有点中找。同时平面点只在地面点类别中找，边缘点只在非地面点类别中找。计算残差的方式和LOAM类似，也是点到线的距离和点到面的距离</p>
+<h4 id="帧间位姿估计两步lm优化">帧间位姿估计：两步LM优化</h4>
+<center>
+<img src="4.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+</center>
+<p>先用平面特征估计<span
+class="math inline">\([roll,pitch,z]\)</span>，再用边缘特征估计另外三个维度。因为平面主要以地面为主，而地面就约束了这三个维度。这种优化方法由于分解了问题，减少了每次优化时的变量维度，减少了迭代的次数。且在地面提取比较准确时，可以较好地估计前3个维度，提高算法的鲁棒性。</p>
+<p>但也就导致算法非常依赖准确的地面提取，在斜坡，地面不平，lidar安装角度不水平时效果都会变差，且分布优化应该会降低准确率。</p>
+<h4 id="建图">建图</h4>
+<p>建图主要是把当前帧的特征<span
+class="math inline">\(F^t_e,F^t_p\)</span>和局部地图做匹配。此外，LeGO-LOAM使用每一个关键帧特征点云单独存储的方式，加入了回环检测，如果当前特征集与之前的特征集通过ICP得到匹配，就把这个约束加入位姿图优化。</p>
+<h3 id="lego-loam的局限性">LeGo-LOAM的局限性</h3>
 <ol type="1">
-<li>LOAM整体流程比较繁琐，计算消耗大。每一帧都存入地图，在后期内存需求很大</li>
-<li>没有后端优化，没有回环检测</li>
+<li>需要lidar水平安装或已知lidar安装的角度</li>
+<li>需要有平坦的地面</li>
+<li>LeGO-LOAM仅保存特征点，因此点云地图很稀疏。</li>
 </ol>
 
                 
@@ -482,8 +511,8 @@ weight）和LM方法来优化。</p></li>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LOAM论文与代码阅读（二）建图</div>
-      <div>https://sisyphus-99.github.io/2023/09/23/LOAM论文与代码阅读2/</div>
+      <div>LEGO-LOAM论文与代码阅读</div>
+      <div>https://sisyphus-99.github.io/2023/09/23/LEGOLOAM论文与代码阅读/</div>
     </div>
     <div class="license-meta">
       
@@ -527,9 +556,9 @@ weight）和LM方法来优化。</p></li>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/23/LEGOLOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB/" title="LEGO-LOAM论文与代码阅读">
+                      <a href="/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB3/" title="LOAM论文与代码阅读（三）IMU运动补偿相关代码">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">LEGO-LOAM论文与代码阅读</span>
+                        <span class="hidden-mobile">LOAM论文与代码阅读（三）IMU运动补偿相关代码</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -537,8 +566,8 @@ weight）和LM方法来优化。</p></li>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/" title="pyside6应用过程中的问题记录">
-                        <span class="hidden-mobile">pyside6应用过程中的问题记录</span>
+                      <a href="/2023/09/23/LOAM%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB2/" title="LOAM论文与代码阅读（二）建图">
+                        <span class="hidden-mobile">LOAM论文与代码阅读（二）建图</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
