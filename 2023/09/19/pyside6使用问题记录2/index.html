@@ -16,25 +16,23 @@
   <meta name="author" content="sisyphus">
   <meta name="keywords" content="">
   
-    <meta name="description" content="多视图几何，消失点，地平线">
+    <meta name="description" content="QGraphicsItem自定义选中效果">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图片消失点，地平线标定相机">
-<meta property="og:url" content="https://sisyphus-99.github.io/2023/09/29/%E5%9B%BE%E7%89%87%E6%B6%88%E5%A4%B1%E7%82%B9%E5%9C%B0%E5%B9%B3%E7%BA%BF%E6%A0%87%E5%AE%9A%E7%9B%B8%E6%9C%BA/index.html">
+<meta property="og:title" content="pyside6使用问题记录（二）">
+<meta property="og:url" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%952/index.html">
 <meta property="og:site_name" content="My Rock">
-<meta property="og:description" content="多视图几何，消失点，地平线">
+<meta property="og:description" content="QGraphicsItem自定义选中效果">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/29/%E5%9B%BE%E7%89%87%E6%B6%88%E5%A4%B1%E7%82%B9%E5%9C%B0%E5%B9%B3%E7%BA%BF%E6%A0%87%E5%AE%9A%E7%9B%B8%E6%9C%BA/1.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/29/%E5%9B%BE%E7%89%87%E6%B6%88%E5%A4%B1%E7%82%B9%E5%9C%B0%E5%B9%B3%E7%BA%BF%E6%A0%87%E5%AE%9A%E7%9B%B8%E6%9C%BA/2.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/29/%E5%9B%BE%E7%89%87%E6%B6%88%E5%A4%B1%E7%82%B9%E5%9C%B0%E5%B9%B3%E7%BA%BF%E6%A0%87%E5%AE%9A%E7%9B%B8%E6%9C%BA/3.png">
-<meta property="article:published_time" content="2023-09-29T06:48:29.000Z">
-<meta property="article:modified_time" content="2023-10-16T10:43:40.300Z">
+<meta property="og:image" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%952/1.jpg">
+<meta property="article:published_time" content="2023-09-19T12:17:29.000Z">
+<meta property="article:modified_time" content="2023-10-16T10:41:28.947Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sisyphus-99.github.io/2023/09/29/%E5%9B%BE%E7%89%87%E6%B6%88%E5%A4%B1%E7%82%B9%E5%9C%B0%E5%B9%B3%E7%BA%BF%E6%A0%87%E5%AE%9A%E7%9B%B8%E6%9C%BA/1.png">
+<meta name="twitter:image" content="https://sisyphus-99.github.io/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%952/1.jpg">
   
   
   
-  <title>图片消失点，地平线标定相机 - My Rock</title>
+  <title>pyside6使用问题记录（二） - My Rock</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -229,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="图片消失点，地平线标定相机"></span>
+            <span id="subtitle" data-typed-text="pyside6使用问题记录（二）"></span>
           
         </div>
 
@@ -240,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-29 14:48" pubdate>
-          September 29, 2023 pm
+        <time datetime="2023-09-19 20:17" pubdate>
+          September 19, 2023 pm
         </time>
       </span>
     
@@ -252,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k words
+          3.6k words
         
       </span>
     
@@ -263,7 +261,7 @@
         
         
         
-          24 mins
+          30 mins
         
       </span>
     
@@ -316,17 +314,17 @@
     
     <div class="category row nomargin-x">
       <a class="category-item 
-          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="标定"
-        id="heading-f39b231c939e26fbfcbcb9934a471cdd" role="tab" data-toggle="collapse" href="#collapse-f39b231c939e26fbfcbcb9934a471cdd"
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="前端"
+        id="heading-9abfe4a03928eb88a75a5cd95822dfef" role="tab" data-toggle="collapse" href="#collapse-9abfe4a03928eb88a75a5cd95822dfef"
         aria-expanded="true"
       >
-        标定
-        <span class="list-group-count">(1)</span>
+        前端
+        <span class="list-group-count">(3)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
-      <div class="category-collapse collapse show" id="collapse-f39b231c939e26fbfcbcb9934a471cdd"
-           role="tabpanel" aria-labelledby="heading-f39b231c939e26fbfcbcb9934a471cdd">
+      <div class="category-collapse collapse show" id="collapse-9abfe4a03928eb88a75a5cd95822dfef"
+           role="tabpanel" aria-labelledby="heading-9abfe4a03928eb88a75a5cd95822dfef">
         
         
           
@@ -335,10 +333,28 @@
     
       
       
-        <a href="/2023/09/29/%E5%9B%BE%E7%89%87%E6%B6%88%E5%A4%B1%E7%82%B9%E5%9C%B0%E5%B9%B3%E7%BA%BF%E6%A0%87%E5%AE%9A%E7%9B%B8%E6%9C%BA/" title="图片消失点，地平线标定相机"
+        <a href="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%951/" title="pyside6使用问题记录（一）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">pyside6使用问题记录（一）</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%952/" title="pyside6使用问题记录（二）"
            class="list-group-item list-group-item-action
            active">
-          <span class="category-post">图片消失点，地平线标定相机</span>
+          <span class="category-post">pyside6使用问题记录（二）</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/24/pyside6%E5%AE%89%E8%A3%85%E5%90%8E%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99/" title="pyside6安装后报错及解决方法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">pyside6安装后报错及解决方法</span>
         </a>
       
     
@@ -360,140 +376,44 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">图片消失点，地平线标定相机</h1>
+            <h1 id="seo-header">pyside6使用问题记录（二）</h1>
             
             
               <div class="markdown-body">
                 
-                <div class="note note-primary">
-            <p>用消失点和地平线标定相机是我的一项工作中的内容，其中涉及的一些多视图几何原理，在此做一个整理和回顾。</p>
-          </div>
+                <h3
+id="问题1自定义qgraphicsitem的选中效果">问题1：自定义QGraphicsItem的选中效果</h3>
+<p>当把某个QGraphicsItem设置为<code>ItemIsSelectable</code>时，鼠标选中会有效果：<strong>item显示一个矩形的虚线边框</strong></p>
+<p>由于我的item本身不是矩形，且虚线不够明显，我希望修改成点击后改变填充的颜色。</p>
+<p><strong>解决方法：</strong></p>
+<p>重新定义一个自己的QGraphicsItem类，继承自原来的item类，并重写paint()函数。在函数中加入判断是否点击，并改变笔刷颜色。</p>
+<p>先看一下虚线的由来(C++版本的):</p>
+<p>参考 https://developer.aliyun.com/article/119812</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">QGraphicsPathItem::paint</span><span class="hljs-params">(QPainter *painter, <span class="hljs-type">const</span> QStyleOptionGraphicsItem *option,</span></span><br><span class="hljs-params"><span class="hljs-function">                              QWidget *widget)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">Q_D</span>(QGraphicsPathItem);<br>    <span class="hljs-built_in">Q_UNUSED</span>(widget);<br>    painter-&gt;<span class="hljs-built_in">setPen</span>(d-&gt;pen);<br>    painter-&gt;<span class="hljs-built_in">setBrush</span>(d-&gt;brush);<br>    painter-&gt;<span class="hljs-built_in">drawPath</span>(d-&gt;path);<br><br>    <span class="hljs-keyword">if</span> (option-&gt;state &amp; QStyle::State_Selected)<br>        <span class="hljs-built_in">qt_graphicsItem_highlightSelected</span>(<span class="hljs-keyword">this</span>, painter, option);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可以看到在paint函数中调用了<code>qt_graphicsItem_highlightSelected</code>函数来实现点击后显示效果的功能。那么我们重写的paint函数只要完成（1）把内容画出来，（2）判断selected并修改painter样式</p>
+<p>最终代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PySide6 <span class="hljs-keyword">import</span> QtWidgets<br><span class="hljs-keyword">from</span> PySide6.QtGui <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> PySide6.QtWidgets <span class="hljs-keyword">import</span>*<br><span class="hljs-keyword">from</span> PySide6.QtCore <span class="hljs-keyword">import</span> Qt, QPointF, QPoint<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">myQGraphicsPolygonItem</span>(QtWidgets.QGraphicsPolygonItem):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, polygon</span>):<br>        <span class="hljs-built_in">super</span>().__init__(polygon)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">paint</span>(<span class="hljs-params">self, painter: QPainter, option: QStyleOptionGraphicsItem, widget</span>):<br>        painter.setPen(self.pen())<br>        painter.setBrush(self.brush())<br>        selected = option.state &amp;amp; QStyle.StateFlag.State_Selected<br>        <span class="hljs-keyword">if</span> selected:<br>            brush = QBrush(QColor(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>))<br>            painter.setBrush(brush)<br>        painter.drawPolygon(self.polygon())<br>        <br> <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo</span>(<span class="hljs-title class_ inherited__">QGraphicsView</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>(Demo, self).__init__()<br>        self.resize(<span class="hljs-number">600</span>, <span class="hljs-number">600</span>)<br> <br>        self.scene1 = QGraphicsScene()<br>        self.scene1.setSceneRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">300</span>, <span class="hljs-number">300</span>)<br><br>        points = [(<span class="hljs-number">200</span>,<span class="hljs-number">100</span>), (<span class="hljs-number">180</span>, <span class="hljs-number">150</span>), (<span class="hljs-number">200</span>, <span class="hljs-number">200</span>), (<span class="hljs-number">250</span>, <span class="hljs-number">200</span>), (<span class="hljs-number">270</span>, <span class="hljs-number">150</span>), (<span class="hljs-number">250</span>, <span class="hljs-number">100</span>)]<br><br>        points = [QPointF(x,y) <span class="hljs-keyword">for</span> x,y <span class="hljs-keyword">in</span> points]<br>        polygon = QPolygonF(points)<br>        self.polygon1 = myQGraphicsPolygonItem(polygon)<br>        pen = QPen(QColor(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>,<span class="hljs-number">0</span>))<br>        brush = QBrush(QColor(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>))<br>        self.polygon1.setPen(pen)<br>        self.polygon1.setBrush(brush)<br>        self.scene1.addItem(self.polygon1)<br><br>        self.polygon1.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsMovable)<br> <br>        self.setScene(self.scene1)<br> <br> <br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    app = QApplication(sys.argv)<br>    demo = Demo()<br>    demo.show()<br>    sys.exit(app.<span class="hljs-built_in">exec</span>())<br><br></code></pre></td></tr></table></figure>
+<p>可以实现点击后改变颜色，点击其他位置恢复颜色。</p>
 <h3
-id="用道路消失点标定相机与道路的roll和pitch">用道路消失点标定相机与道路的roll和pitch</h3>
-<p>从直观定义上来说，消失点是空间中的平行线投影到图像平面后产生的交点，可以认为三维空间中的平行线在无穷远处相交。那么从数学上，空间中一个方向与图像中消失点坐标的关系是怎样的呢？</p>
-<p>空间点投影到2D平面的方程如下：</p>
-<p><span class="math display">\[\lambda \left[ \begin{matrix}
-    u \\ v \\ 1
-\end{matrix}\right] = K [R | t] \left[ \begin{matrix}
-    x \\ y \\ z \\ 1
-\end{matrix}\right]\]</span></p>
-<p>空间中一条直线可以由一个方向向量为<span
-class="math inline">\(\vec{v}\)</span>，一个点为<span
-class="math inline">\(P_0\)</span>来定义。这条直线上的点可以表示为：</p>
-<p><span class="math display">\[P = P_0 + k \vec{v} \]</span></p>
-<p>取不同的<span
-class="math inline">\(P_0\)</span>可以得到一组平行的直线</p>
-<p>把P代入投影方程，得到：</p>
-<p><span class="math display">\[\lambda \left[ \begin{matrix}
-    u \\ v \\ 1
-\end{matrix}\right] = K [R | t] \left[ \begin{matrix}
-    P_0 + k\vec{v} \\ 1
-\end{matrix}\right]\]</span></p>
-<p>消失点可以理解为空间直线无穷远处的点，即<span
-class="math inline">\(k\to \infty\)</span>，此时<span
-class="math inline">\(P_0\)</span>和下面的1都约等于0. 那么公式转为：</p>
-<p><span class="math display">\[ \lambda \left[ \begin{matrix}
-    u \\ v \\ 1
-\end{matrix}\right] = K [R | t] \left[ \begin{matrix}
-    \vec{v} \\ 0
-\end{matrix}\right] = KR \vec{v}\]</span></p>
-<p>现在来看如何进行标定。假设我们的世界坐标系建立在道路方向上，绕z,x,y的角分别为roll，pitch,yaw</p>
+id="点击qgraphicsitem后触发mainwindow窗口的函数">点击QGraphicsItem后触发MainWindow窗口的函数</h3>
+<p>在应用中，我希望点击一个QGraphicsItem后（如下面的一条车道），在MainWindow的statusbar部件中显示选择的车道的Id.</p>
 <center>
-<img src="1.png" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
+<img src="1.jpg" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
 </center>
-<p>那么道路的方向<span class="math inline">\(\vec{v}\)</span>即为<span
-class="math inline">\((0,0,1)\)</span></p>
-<p>得到</p>
-<p><span class="math display">\[\lambda p = K R \left[ \begin{matrix}
-    0 \\ 0 \\ 1
-\end{matrix}\right] = KR_3 = K \left[ \begin{matrix}
-    -cos(pitch)sin(yaw) \\ sin(pitch) \\ cos(pitch)cos(yaw)
-\end{matrix}\right] \]</span></p>
-<p>可以看到只留下了pitch,yaw角。说明消失点对于roll角是不可观的。</p>
-<p>我们可以利用旋转矩阵正交性（列向量模为1）消去<span
-class="math inline">\(\lambda\)</span></p>
-<p><span class="math display">\[\frac{K^{-1}p}{\|K^{-1}p\|} = \left[
-\begin{matrix}
-    -cos(pitch)sin(yaw) \\ sin(pitch) \\ cos(pitch)cos(yaw)
-\end{matrix}\right] \]</span></p>
-<p>左边已知，可求出pitch和yaw</p>
-<h3 id="用地平线估计roll角">用地平线估计roll角</h3>
-<p>这里所指的地平线可以认为是地平面和与其平行的平面在无穷远处的交线。</p>
-<p>一个简单的推导如下：假设相机坐标系下的三维消失线为<span
-class="math inline">\(l_\infty\)</span>,消失点为<span
-class="math inline">\(P_\infty\)</span>
-(都是齐次坐标系表示），那么有</p>
-<p><span class="math display">\[P_\infty^T l_\infty = 0\]</span></p>
-<p><span class="math display">\[P_\infty^T K^T K^{-T} l_\infty =
-0\]</span></p>
-<p><span class="math display">\[(KP_\infty)^T K^{-T} l_\infty =
-0\]</span></p>
-<p>而<span class="math inline">\(p_\infty = KP_\infty\)</span></p>
-<p><span class="math display">\[(p_\infty)^T (K^{-T} l_\infty) =
-0\]</span></p>
-<p>则<span class="math inline">\(l_{horizon} = K^{-T}
-l_\infty\)</span></p>
-<p>因此有以下等式，其中g为重力向量，R为世界坐标系到相机坐标系的旋转，K为内参，h是地平线在图像上投影的直线的齐次坐标。</p>
-<p><span class="math display">\[h\propto K^{-T}Rg\]</span></p>
-<p>在上图的道路坐标系下，重力向量可以表示为<span
-class="math inline">\([0,1,0]\)</span>，</p>
-<p><span class="math display">\[\left[\begin{matrix}
-    h_1 \\ h_2 \\ h_3
-\end{matrix}\right]=h\propto K^{-T}R_2\]</span></p>
-<p>图像平面上地平线的倾斜角<span class="math inline">\(\theta =
-arctan(-\frac{h_1}{h_2})\)</span></p>
-<h3 id="用多个消失点估计相机内外参">用多个消失点估计相机内外参</h3>
-<h4
-id="用三个正交方向的消失点标定相机内外参">用三个正交方向的消失点标定相机内外参</h4>
-<p><strong>求解内参：</strong></p>
-<p>在符合Manhattan假设的环境中（通常是人造建筑物），画面中存在三个正交的方向，如下图所示：</p>
-<center>
-<img src="2.png" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
-</center>
-<p>此时我们可以用图像上的三个消失点求解完整的相机内外侧。</p>
-<p>我们把世界坐标系建在这个方向，那么这三个方向在世界坐标系下的方向可以定义为</p>
-<p><span class="math display">\[e_1=\left[\begin{matrix}
-1 \\ 0 \\ 0
-\end{matrix}\right], e_2=\left[\begin{matrix}
-0 \\ 1 \\ 0
-\end{matrix}\right], e_3=\left[\begin{matrix}
-0 \\ 0 \\ 1
-\end{matrix}\right],\]</span></p>
-<p>可以得到：</p>
-<p><span class="math display">\[\lambda_i p_i = K R e_i\]</span></p>
-<p><span class="math display">\[ e_i = \lambda R^T K^{-1}
-p_i\]</span></p>
-<p>由 <span class="math inline">\(e_i^Te_j = 0\)</span>，可以得到：</p>
-<p><span class="math display">\[ p_i^TK^{-T} R R^T K^{-1} p_j =
-p_i^TK^{-T} K^{-1} p_j = 0\]</span></p>
-<p>这样两个消失点可以构建一个内参K的方程。</p>
-<p>相机内参矩阵K可以表示为</p>
-<p><span class="math display">\[ \left[ \begin{matrix}
-    f &amp; 0 &amp; c_x \\ 0 &amp; f &amp; c_y \\ 0 &amp; 0 &amp; 1
-\end{matrix}\right] \]</span></p>
-<p>这样有3个参数，三个消失点两两配对有三组，可以建立3个方程，求出K</p>
-<p>然而具体求解时消失点在图像平面上也可能是无穷远：</p>
-<center>
-<img src="3.png" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
-</center>
-<p>第一种情况下相机坐标系和世界坐标系轴方向一致，两个消失点在图像平面上为无穷远，此时我们得到图像平面上一个有限的消失点，两个无穷远的消失点。此时只能标定光心距——有限的消失点位置<span
-class="math inline">\((u_0, v_0)\)</span>即为内参<span
-class="math inline">\(u_0, v_0\)</span>。</p>
-<p><strong>求解外参旋转：</strong></p>
-<p><span class="math display">\[\lambda_i p_i = K R e_i =
-KR_i\]</span></p>
-<p>根据<span class="math inline">\(\|R_i\|=1\)</span>可以求出<span
-class="math inline">\(\lambda_i=\frac{1}{\|K^{-1}p_i\|}\)</span></p>
-<p><span class="math display">\[ \left [ \begin{matrix}
-    \lambda_1 p_1 &amp; \lambda_2 p_2 &amp; \lambda_3 p_3
-\end{matrix} \right] = KR\]</span></p>
-<p><span class="math display">\[ R = K^{-1}  \left [ \begin{matrix}
-    \lambda_1 p_1 &amp; \lambda_2 p_2 &amp; \lambda_3 p_3
-\end{matrix} \right] \]</span></p>
-<h3 id="参考文献">参考文献</h3>
-<p>[1] Temporally Consistent Horizon Lines</p>
-<p>[2]
-https://www.cs.princeton.edu/courses/archive/fall13/cos429/lectures/11-epipolar</p>
+<p>我可以设置全局变量choosedLane，在每选择一个item时修改该全局变量的值。但我希望在修改后MainWindow的Statusbar更新信息。即每点击一次车道，向主窗口发送一次信号。</p>
+<p>解决方案：</p>
+<p>参考 https://cloud.tencent.com/developer/ask/sof/114657898</p>
+<p>可以自定义一个QGraphicsScene类，加入一个Signal变量。并修改需要点击的QGraphicsItem的函数<code>mousePressEvent()</code>，使其所在scene的Signal变量发射信号，再在主窗口将该变量与需要发生事件函数连接。</p>
+<p>部分代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">myQGraphicsPolygonItem</span>(<span class="hljs-title class_ inherited__">QGraphicsPolygonItem</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, polygon</span>):<br>        <span class="hljs-built_in">super</span>().__init__(polygon)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">paint</span>(<span class="hljs-params">self, painter: QPainter, option: QStyleOptionGraphicsItem, widget</span>):<br>        <span class="hljs-comment"># ...</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">mousePressEvent</span>(<span class="hljs-params">self, event</span>):<br>        self.scene().itemClicked.emit(self)<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">myQGraphicsScene</span>(<span class="hljs-title class_ inherited__">QGraphicsScene</span>):<br>    itemClicked = Signal(<span class="hljs-built_in">object</span>)<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">GUI</span>(<span class="hljs-title class_ inherited__">QGraphicsView</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        self.scene_map = myQGraphicsScene()<br>        self.setScene(self.scene_map)<br>        self.scene_map.itemClicked.connect(self.showMessage)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">showMessage</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-comment"># ...</span><br><br></code></pre></td></tr></table></figure>
+<h3
+id="gui运行耗时程序时用多线程防止窗口卡住">GUI运行耗时程序时用多线程防止窗口卡住</h3>
+<p>在项目中，我有一个交通流仿真程序，按帧得到各个时刻要显示的polyline，polygon等。我希望随着仿真程序的运行，图形化界面能实时刷新。</p>
+<p>但如果仿真和可视化在单线程中顺序进行，在运行仿真函数时，虽然实时调用了绘画的函数，界面却不会马上更新，只有当仿真程序运行完成后，才会一次性显示当前的结果。</p>
+<p>参考： https://realpython.com/python-pyqt-qthread/</p>
+<p>我使用的解决方案是在主线程中跑GUI基于事件循环的显示，另外开一个线程跑仿真，然后通过signal和slot机制来在两个线程之间通讯（仿真线程将要画的几何信息用signal发送给主线程）。</p>
+<p>这里还遇到一个小问题：每一帧仿真时，我会清除界面原来的内容，再重新加上新的几何图形（向QGraphicsScene中addItem）。由于widget在每次清除和加入时都会自动刷新，导致程序跑起来界面一直闪烁。</p>
+<p>解决方法：运用<code>setUpdateEnabled()</code>，在每一帧开始改变前为主窗口设置<code>setUpdateEnabled(False)</code>，这样虽然子线程向主线程发送了clear,additem等signal，窗口不会马上更新。等到一帧全部画完后，再设置<code>setUpdateEnabled(True)</code>，此时窗口会一下把之前所有的改变更新完成，就不会出现画面卡顿闪烁的情况了。</p>
 
                 
               </div>
@@ -512,7 +432,7 @@ https://www.cs.princeton.edu/courses/archive/fall13/cos429/lectures/11-epipolar<
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%A0%87%E5%AE%9A/" class="category-chain-item">标定</a>
+  <a href="/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
   
   
 
@@ -532,8 +452,8 @@ https://www.cs.princeton.edu/courses/archive/fall13/cos429/lectures/11-epipolar<
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>图片消失点，地平线标定相机</div>
-      <div>https://sisyphus-99.github.io/2023/09/29/图片消失点地平线标定相机/</div>
+      <div>pyside6使用问题记录（二）</div>
+      <div>https://sisyphus-99.github.io/2023/09/19/pyside6使用问题记录2/</div>
     </div>
     <div class="license-meta">
       
@@ -545,7 +465,7 @@ https://www.cs.princeton.edu/courses/archive/fall13/cos429/lectures/11-epipolar<
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>September 29, 2023</div>
+          <div>September 19, 2023</div>
         </div>
       
       
@@ -577,12 +497,18 @@ https://www.cs.princeton.edu/courses/archive/fall13/cos429/lectures/11-epipolar<
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2023/09/19/pyside6%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%951/" title="pyside6使用问题记录（一）">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">pyside6使用问题记录（一）</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/28/%E9%80%9F%E8%85%BE%E8%81%9A%E5%88%9B%E7%AC%94%E8%AF%95%E8%AE%B0%E5%BD%95/" title="2024秋招速腾聚创笔试记录(2023.9.4)">
-                        <span class="hidden-mobile">2024秋招速腾聚创笔试记录(2023.9.4)</span>
+                      <a href="/2023/09/14/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3/" title="C++多线程学习笔记-3">
+                        <span class="hidden-mobile">C++多线程学习笔记-3</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
