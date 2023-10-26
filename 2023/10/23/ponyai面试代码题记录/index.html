@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://sisyphus-99.github.io/2023/10/23/ponyai%E9%9D%A2%E8%AF%95%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AE%B0%E5%BD%95/1.png">
 <meta property="article:published_time" content="2023-10-23T09:03:40.000Z">
-<meta property="article:modified_time" content="2023-10-26T05:27:11.874Z">
+<meta property="article:modified_time" content="2023-10-26T06:11:44.251Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://sisyphus-99.github.io/2023/10/23/ponyai%E9%9D%A2%E8%AF%95%E4%BB%A3%E7%A0%81%E9%A2%98%E8%AE%B0%E5%BD%95/1.png">
@@ -368,7 +368,7 @@
 <p>第1行：节点数 需要经过的节点数</p>
 <p>第2-N行：每一行表示连接两个节点的一条边</p>
 <p>第3行：M个数，表示需要经过的节点编号</p>
-<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">7 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">4</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">6</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">7</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">7 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">4</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">6</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">7</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
 <p>思路：</p>
 <p>当一棵树（节点为N）的每个节点都要经过时，经过所有节点的最短路径的长度是?</p>
 <p>由于树的特殊结构，N个节点一定有N-1条边。选择一个叶节点为起点，我们从起点到终点的边只要走一次，其余边要走两次。走过的总路长为</p>
