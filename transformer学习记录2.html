@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sisyphus.png">
+  <link rel="icon" href="/img/sisyphus.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="sisyphus">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="transformer, NLP">
+<meta property="og:type" content="website">
+<meta property="og:title" content="理解transformer（二）基础transformer结构">
+<meta property="og:url" content="https://sisyphus-99.github.io/transformer%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952.html">
+<meta property="og:site_name" content="My Rock">
+<meta property="og:description" content="transformer, NLP">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://sisyphus-99.github.io/1.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/2.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/3.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/5.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/6.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/7.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/8.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/11.jpg">
+<meta property="og:image" content="https://sisyphus-99.github.io/9.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/10.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/12.png">
+<meta property="article:published_time" content="2023-10-18T12:02:29.000Z">
+<meta property="article:modified_time" content="2023-10-20T11:33:44.580Z">
+<meta property="article:author" content="sisyphus">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sisyphus-99.github.io/1.png">
+  
+  
+  
+  <title>理解transformer（二）基础transformer结构 - My Rock</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"sisyphus-99.github.io","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"KmWAjZJHmcGsnarMkd84EEEQ-gzGzoHsz","app_key":"X0zS3gkM74MSiNRIswWh418h","server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Sisyphus&#39; Rock</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="理解transformer（二）基础transformer结构"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<article class="page-content">
+  <h2 id="整体结构">整体结构</h2>
+<p>原始的transformer应用在NLP领域，输入一个句子，输出另一个句子。整个结构可以分为编码器和解码器两大模块，其中编码器模块由若干个（6）结构相同的编码器按顺序连接，而解码器也有若干个顺序连接。如下图所示</p>
+<center>
+<img src="1.png" srcset="/img/loading.gif" lazyload width="70%" height="70%" />
+</center>
+<h2 id="输入">输入</h2>
+<p>通过embedding
+algorithm（每个单词按字典对应一个向量）可以将输入的原始句子转换为embeddings。例如，一个单词转化为512维vector，一个句子的所有embeddings组成一个list.
+list的长度是固定的（通常可以设为训练集中最长的句子的长度），设定某个特殊embedding作为实际的句子结束符。</p>
+<h2 id="encoder">encoder</h2>
+<p>最底层的encoder接收输入向量，而接下来每一个encoder把上一个encoder的输出作为输入。每一个小的encoder结构是相同的。</p>
+<h3 id="自注意力层">自注意力层</h3>
+<p>每一个小的编码器在结构上可以分为两层：自注意力和前馈层。</p>
+<center>
+<img src="2.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+</center>
+<p>每个位置的单词在编码器中都流经其自己的路径。自注意力层中这些路径存在依赖关系，因为自注意力层将寻找单词之间的联系。而前馈层则没有这种依赖关系，因此前馈层可以并行运行。</p>
+<h4 id="从high-level理解self-attention">从high
+level理解self-attention</h4>
+<p>假设我们想要翻译下面这个句子：</p>
+<figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smalltalk"><span class="hljs-comment">&quot;The animal didn&#x27;t cross the street because it was too tired&quot;</span><br></code></pre></td></tr></table></figure>
+<p><code>it</code>在句子里指代哪个单词呢，我们希望自注意力将其与<code>animal</code>联系起来。当模型处理每个单词时，自注意力层查看其它单词并用当前词和其他词的关联程度，对当前词进行编码，希望为当前位置加上上下文的线索。</p>
+<h4 id="从detail理解self-attention">从detail理解self-attention</h4>
+<p>我们首先来看怎么用vector来计算self-attention，这个过程更容易理解，再进一步看它实际是如何用矩阵实现的。</p>
+<h5 id="vector形式">vector形式</h5>
+<p><strong>第一步：生成q,k,v</strong></p>
+<p>从每个输入向量生成3个向量。即对一个单词，我们生成一个query vector,
+key vector, value vector。
+这些vector的维度通常小于输入embedding，主要是为了在多头注意力机制下保持输出维度的不变。</p>
+<div class="note note-warnning">
+            <p>但是多头注意力的输出并不是拼在一起后就直接输入下一个encoder，而是还要经过一个聚合的矩阵，那这里为什么要保持维度呢？</p>
+          </div>
+<center>
+<img src="3.png" srcset="/img/loading.gif" lazyload width="70%" height="70%" />
+</center>
+<p><strong>第二步：计算注意力分数</strong></p>
+<p>假设我们要计算所有单词相对于<code>thinking</code>单词的自注意力分数（也就是所有单词与这个单词的联系），例如某个单词machine，其相对于thinking的注意力表示了我们要将多少程度的machines的含义加到thinking单词输出的编码值中。</p>
+<p>这个分数通过对 query vector 和 key
+vector的点积得到，即在算thinking的注意力分数时，thinking本身的注意力是
+<span class="math inline">\(q_1^T k_1\)</span> ,
+machines对于thinking的注意力是 <span class="math inline">\(q_1^T
+k_2\)</span>. 相对于是用代表单词1的query去和其他单词的 key
+相乘，相似度表示了两者的联系。</p>
+<p><strong>第三步和第四步</strong></p>
+<p>先将分数除以8（key vector
+维度的平方根），使得梯度更加稳定（值太大的话经过softmax
+梯度趋向于0）。再经过一个softmax层，所有注意力转化为了和为1的概率值</p>
+<p><strong>第五步和第六步</strong></p>
+<p>各个注意力分数与value
+vector相乘。即把各个注意力乘上单词本身的值。再把所有乘完的值加起来，作为第一个单词在自注意力层一个头的输出。</p>
+<p>整个过程可理解为：当前词的输出希望能计算一个由所有词的含义得到的加权和，那么问题就是所有词的权重怎么计算，要加权的值怎么计算。在实现中，要加权的值是由原始输入根据学习参数得到的value，权重值是由每个词自身的query去乘所有其他词的key得到，query相当于是当前词与其他词寻找联系的信息，key相当于是当前词能提供给其他词的信息。</p>
+<h5 id="矩阵形式">矩阵形式</h5>
+<p>在实际的实现中，这些计算是通过矩阵来做的。所有的输入单词组成一个矩阵X(n
+x m), n是单词个数，m是每个单词的embedding维度。</p>
+<p><strong>第一步</strong></p>
+<p>X乘上三个系数矩阵（权重由训练进行优化）得到Q,K,V矩阵，如下图所示</p>
+<center>
+<img src="5.png" srcset="/img/loading.gif" lazyload width="70%" height="70%" />
+</center>
+<p><strong>第二步</strong></p>
+<p>最终输出可由Q,K,V计算得到：</p>
+<p><span
+class="math display">\[Z=softmax(\frac{QK^T}{\sqrt{d_k}})V\]</span></p>
+<center>
+<img src="6.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+</center>
+<h4 id="多头注意力机制">多头注意力机制</h4>
+<p>多头注意力机制是指上述这样的Q,K,V计算了多次（由不同的权重矩阵生成新的Q,K,V），产生多个输出Z,拼在一起组成了下一个encoder的输入。</p>
+<p>这样做的好处是：</p>
+<ol type="1">
+<li>它扩展了模型的能力，使其能关注不同的位置（可以理解为每个头的一个输出代表了输出位置的一个单词）</li>
+<li>它使得注意力层有了多个表示子空间（每组随机初始化的Q，K，V能学习到一个不同的表示子空间），增强了模型的表达能力</li>
+</ol>
+<p>用实际例子来说明：</p>
+<figure class="highlight smalltalk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs smalltalk"><span class="hljs-comment">&quot;The animal didn&#x27;t cross the street because it was too tired&quot;</span><br></code></pre></td></tr></table></figure>
+<p>在对<code>it</code>进行编码时，训练得到的多头注意力的一个头会最关注<code>animal</code>，其他头更关注<code>tired</code>，因此最终模型对<code>it</code>的表示是<code>animal</code>，<code>tired</code>表示的综合。</p>
+<p>经过多头注意力机制，我们得到了多个矩阵Z：</p>
+<center>
+<img src="7.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+</center>
+<p>为了把这个多个输出拼在一起，我们先将其直接拼接，再乘以一个权重矩阵W来聚合所有Z的信息：</p>
+<center>
+<img src="8.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+</center>
+<h3 id="残差">残差</h3>
+<p>另外在实现上的一个细节是，自注意力和FFN层都连接了一个残差层。残差层使得网络只需拟合增量，而不需要拟合恒等映射，使得模型更能拟合到正确的表达。</p>
+<h3 id="layernorm">LayerNorm</h3>
+<p>在经过残差连接后，再经过残差连接对特征做归一化。LayerNorm对每个样本内部做归一化，下图展示了LayerNorm
+和 BatchNorm 归一化的维度的差别：</p>
+<center>
+<img src="11.jpg" srcset="/img/loading.gif" lazyload width="70%" height="70%" />
+</center>
+<div class="note note-danger">
+            <p>BatchNorm和LayerNorm的比较，transformer中使用LayerNorm的原因（参考https://zhuanlan.zhihu.com/p/492803886，但仍然没有太理解）</p>
+          </div>
+<h3 id="feed-forward-network">Feed Forward Network</h3>
+<p>对自注意力的输出进行多个线性连接和非线性激活函数，相对于对每个位置的向量进行非线性变换，从而提高模型的表达能力。</p>
+<h2 id="positional-encoding">positional encoding</h2>
+<p>在前面描述的注意力机制中，我们用q,k,v能够为当前单词添加其他各个单词的信息，但这里却忽略了单词之间的距离，没有用上句子中各个单词的顺序信息，而这对于理解语义来说也是非常重要的。</p>
+<p>为了表示sequence的顺序，transformer加入了一个positional
+encoding。</p>
+<center>
+<img src="9.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+</center>
+<p>这些向量遵循一种特定模式，有助于确定每个单词的位置。在计算注意力期间，这些值在embedding中点积可以提供有意义的距离。</p>
+<p>将positional encoding 可视化：</p>
+<center>
+<img src="10.png" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
+</center>
+<p>左图是Tenso2Tensor中的实现：横坐标为embedding的维度512，纵坐标为词的顺序，可以看到分成了两块区域，左半边是用sine函数生成的，右半边是用cosine函数生成的。右图是原始论文中的，把cosine
+sine两个信号穿插在一起。</p>
+<h2 id="decoder">decoder</h2>
+<p>encoder和decoder的连接方式如下图所示：</p>
+<center>
+<img src="12.png" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
+</center>
+<p>可以看到一个decoder内部包含两个注意力层。第一个是对decoder输入的自注意力，第二个使用了从encoder编码向量中得到的K,V矩阵。</p>
+<p>decoder中的自注意力层的操作和encoder中有些许不同。自注意力层只被允许考虑之前位置的输出，这通过将未来的位置加上mask(将值设为
+－Inf) 实现。</p>
+<p>encoder的输出通过权重矩阵转化为了一些注意力向量K和V。这些向量在每个decoder的
+encoder-decoder
+attention层中使用（即此时的Q来自decoder的上一层输出，K,V来自encoder的输出），
+帮助decoder关注输入sequence中合适的位置。</p>
+<p>每一步，decoder得到一个输出，这个输出会再次输入最底层的decoder得到一个新的输出，一直这样循环进行直到特殊标志输出。每一步的输出在输入decoder前也会加入位置编码
+（decoder的第一个输入是设置的某个起始符，知道输出终止符时结束）</p>
+<h2 id="最后的线性层和softmax层">最后的线性层和softmax层</h2>
+<p>decoder
+输出的一个向量，通过一个全连接层，转化为一个大的多的向量叫做逻辑向量
+logits vector
+（它的长度是模型的词汇量的大小），这个向量的每个单元对应一个单词，单元的值代表这个单词的分数概率。
+softmax层将所有分数转化到0－1
+分数最高的单元对应的单词作为这个时刻的输出。</p>
+<h2 id="参考资料">参考资料</h2>
+<p>[1] https://jalammar.github.io/illustrated-transformer/</p>
+
+
+  
+
+</article>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        total visits 
+        <span id="leancloud-site-pv"></span>
+        
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        total visitors 
+        <span id="leancloud-site-uv"></span>
+         
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
