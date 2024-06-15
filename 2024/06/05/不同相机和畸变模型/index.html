@@ -16,35 +16,24 @@
   <meta name="author" content="sisyphus">
   <meta name="keywords" content="">
   
-    <meta name="description" content="IMU预积分构建残差，雅可比矩阵递推，噪声协方差矩阵递推，零偏的更新">
+    <meta name="description" content="针孔模型(pinhole model)和全向模型(omnidirectional model)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IMU预积分理论推导">
-<meta property="og:url" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/index.html">
+<meta property="og:title" content="不同相机和畸变模型">
+<meta property="og:url" content="https://sisyphus-99.github.io/2024/06/05/%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E5%92%8C%E7%95%B8%E5%8F%98%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="My Rock">
-<meta property="og:description" content="IMU预积分构建残差，雅可比矩阵递推，噪声协方差矩阵递推，零偏的更新">
+<meta property="og:description" content="针孔模型(pinhole model)和全向模型(omnidirectional model)">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/2.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/1.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/3.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/4.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/5.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/6.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/7.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/8.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/9.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/10.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/11.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/12.png">
-<meta property="og:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/13.png">
-<meta property="article:published_time" content="2023-11-07T12:09:29.000Z">
-<meta property="article:modified_time" content="2023-11-10T10:53:00.317Z">
+<meta property="og:image" content="https://sisyphus-99.github.io/2024/06/05/%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E5%92%8C%E7%95%B8%E5%8F%98%E6%A8%A1%E5%9E%8B/1.png">
+<meta property="og:image" content="https://sisyphus-99.github.io/2024/06/05/%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E5%92%8C%E7%95%B8%E5%8F%98%E6%A8%A1%E5%9E%8B/2.png">
+<meta property="article:published_time" content="2024-06-05T08:34:20.000Z">
+<meta property="article:modified_time" content="2024-06-14T14:27:07.547Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/2.png">
+<meta name="twitter:image" content="https://sisyphus-99.github.io/2024/06/05/%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E5%92%8C%E7%95%B8%E5%8F%98%E6%A8%A1%E5%9E%8B/1.png">
   
   
   
-  <title>IMU预积分理论推导 - My Rock</title>
+  <title>不同相机和畸变模型 - My Rock</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -239,7 +228,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="IMU预积分理论推导"></span>
+            <span id="subtitle" data-typed-text="不同相机和畸变模型"></span>
           
         </div>
 
@@ -250,8 +239,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-07 20:09" pubdate>
-          November 7, 2023 pm
+        <time datetime="2024-06-05 16:34" pubdate>
+          June 5, 2024 pm
         </time>
       </span>
     
@@ -262,7 +251,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.6k words
+          3.7k words
         
       </span>
     
@@ -273,7 +262,7 @@
         
         
         
-          14 mins
+          31 mins
         
       </span>
     
@@ -356,7 +345,7 @@
       
         <a href="/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/" title="IMU预积分理论推导"
            class="list-group-item list-group-item-action
-           active">
+           ">
           <span class="category-post">IMU预积分理论推导</span>
         </a>
       
@@ -419,7 +408,7 @@
       
         <a href="/2024/06/05/%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E5%92%8C%E7%95%B8%E5%8F%98%E6%A8%A1%E5%9E%8B/" title="不同相机和畸变模型"
            class="list-group-item list-group-item-action
-           ">
+           active">
           <span class="category-post">不同相机和畸变模型</span>
         </a>
       
@@ -442,105 +431,140 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">IMU预积分理论推导</h1>
+            <h1 id="seo-header">不同相机和畸变模型</h1>
             
             
               <div class="markdown-body">
                 
-                <p>IMU与视觉或激光耦合是目前SLAM的常用形式。在后端优化中，我们需要通过IMU测量和状态量构建的残差，同时计算残差相对于状态量的雅可比矩阵，以及噪声量的协方差矩阵。为了减少计算量，IMU预积分是目前主要使用的一种形式。</p>
-<h3 id="基本思路">基本思路</h3>
-<p><strong>预积分的主要目的是使得IMU测量量与绝对位姿解耦，避免在位姿更新时需要更新测量量的积分。</strong></p>
-<p>IMU的输出为加速度和角速度，测量模型为（这里考虑以惯性坐标系为参考系）：</p>
+                <h2 id="相机成像模型">相机成像模型</h2>
+<h3 id="针孔模型pinhole-model">针孔模型(pinhole model)</h3>
+<p>针孔模型是最常见的相机假设模型，对于空间点P(x,y,z)，经过外参T和内参K投影到图像上的点(u,v):</p>
+<p><span class="math display">\[\lambda \left[ \begin{matrix}
+    u \\ v \\ 1
+\end{matrix}\right] = K [R | t] \left[ \begin{matrix}
+    x \\ y \\ z \\ 1
+\end{matrix}\right]\]</span></p>
+<h3 id="全向模型omnidirectional-model">全向模型(omnidirectional
+model)</h3>
+<p>这类相机有360度FOV或者有超过半球的视野。它们有很高的畸变，不能用传统小孔成像模型来描述。</p>
+<p>目前存在几种构建广角相机的方法：</p>
+<ol type="1">
+<li><p>Dioptric camera(折光相机): 使用一组shaped
+lens(如鱼眼镜头)，提供略大于半球的视野。鱼眼相机在2000年左右开始使用</p></li>
+<li><p>Catadioptric camera(反射折射相机): lens+mirror.
+在1990年提出[1]</p></li>
+</ol>
 <center>
-<img src="2.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
+<img src="1.png" srcset="/img/loading.gif" lazyload width="40%" height="40%" />
 </center>
-<p>其中</p>
-<p><span class="math display">\[n_a \sim N(0,\sigma_a^2),\ n_\omega \sim
-N(0,\sigma_\omega^2)\]</span></p>
-<p><span class="math display">\[\dot{b}_{a_t}=n_{b_a},\
-\dot{b}_{\omega_t}=n_{b_\omega}\]</span></p>
-<p><span class="math display">\[n_{b_a} \sim N(0,\sigma_{b_a}^2),\
-n_{b_\omega} \sim N(0,\sigma_{b_\omega}^2)\]</span></p>
-<p><span class="math inline">\(\sigma_a, \sigma_\omega, \sigma_{b_a},
-\sigma_{b_\omega}\)</span>
-是IMU的参数，预先经过allen方差等方法标定后作为参数输入。</p>
-<p>那么我们要建立测量值与状态量之间的关系显然需要积分，即通过IMU的运动模型：</p>
+<p><em>catadioptric camera
+示意图，上方是一个反射镜（可能为双曲线，抛物线，椭圆等），再经过下方一个正常的单孔镜头成像</em></p>
+<ol start="3" type="1">
+<li>polydioptric cameras: 多个相机的视野组合，能提供360度视野</li>
+</ol>
+<h4 id="用于catadioptric-camera的统一模型">用于catadioptric
+camera的统一模型</h4>
+<p><strong>Unified projection model</strong> for central catadioptric
+cameras: 在2000由 Geyer and Daniilidis[2] 提出 (后来由 Barreto and
+Araujo[3] 改进)
+，适用于双曲线、抛物线、椭球面的反射镜组成的折反射相机，但不适合鱼眼相机。</p>
+<p>model的示意图：</p>
 <center>
-<img src="1.png" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
+<img src="2.png" srcset="/img/loading.gif" lazyload width="60%" height="60%" />
 </center>
-<p>上述公式是对连续值的积分，但事实上IMU测量值是一定频率的，离散的。假设<span
-class="math inline">\(t_i \ in [t_k,t_{k+1}]\)</span>
-是两个相机帧之间的IMU帧，积分公式可以转化为累加的形式：</p>
-<center>
-<img src="3.png" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
-</center>
-<p>（来源 https://zhuanlan.zhihu.com/p/388859808）</p>
-<p>这里符号表示和上方不统一，但意思是一致的，即把原来的连续值积分转化为数值累加/累乘。</p>
-<p>根据这个公式，我们事实上已经建立起状态量和测量值之间的关系，可以构建残差了。但问题时，一旦状态量更新，如<span
-class="math inline">\(R_i\)</span>改变，那么由于速度、位置积分中有<span
-class="math inline">\(R_k\)</span>，那i~j之间的速度，位置量必须重新积分，这增加了很大计算量。</p>
-<p>预积分正是为了改进这个问题，它定义了一种相对的运动量（在vinsMono中，这种方式被表述为以k时刻的体坐标系为参考坐标系）。</p>
-<center>
-<img src="4.png" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
-</center>
-<div class="note note-success">
-            <p>预积分量并没有直接的物理含义。<span class="math inline">\(\Delta v,\Deltap\)</span>并不表示某两个速度或位置上的偏差，只是如此定义而已。当然，从量纲上来说，应该与角度、速度、位移对应。</p>
-          </div>
-<p>可以看到此时等式右侧现在与状态量中的位置，速度，姿态无关。此时更新状态量中的p,
-q,
-v，相邻两帧之间的IMU测量值约束也不需要重新计算。不过，如果零偏发生变化，那么还是需要重新积分的，但是考虑到零偏的变化程度比较小，我们能利用修正而非重新计算的思路来调整积分量。</p>
-<h3 id="预积分测量模型">预积分测量模型</h3>
-<p>在测量模型中，我们需要建立预积分测量和状态量之间的关系，同时分析其噪声。</p>
-<h4 id="旋转">旋转</h4>
-<p>我们定义预积分测量量</p>
-<center>
-<img src="5.png" srcset="/img/loading.gif" lazyload width="50%" height="50%" />
-</center>
-<p>而我们定义的预积分状态量<span class="math inline">\(\Delta
-R_{ij}\)</span>可以表示为：</p>
-<center>
-<img src="6.png" srcset="/img/loading.gif" lazyload width="60%" height="60%" />
-</center>
-<p>不断地把观测置换到左侧，并把噪声置换到右侧，并且把噪声项内部<span
-class="math inline">\(\Delta
-\widetilde{R}\)</span>的项合并，可以得到：</p>
-<center>
-<img src="7.png" srcset="/img/loading.gif" lazyload width="60%" height="60%" />
-</center>
-<h4 id="速度">速度</h4>
-<p>定义预积分速度观测量为：</p>
-<center>
-<img src="8.png" srcset="/img/loading.gif" lazyload width="60%" height="60%" />
-</center>
-<p>那么可以推导状态量与观测量之间的关系：</p>
-<center>
-<img src="9.png" srcset="/img/loading.gif" lazyload width="60%" height="60%" />
-</center>
-<center>
-<img src="10.png" srcset="/img/loading.gif" lazyload width="60%" height="60%" />
-</center>
-<h4 id="位置">位置</h4>
-<p>定义预积分位置观测量为：</p>
-<center>
-<img src="11.png" srcset="/img/loading.gif" lazyload width="60%" height="60%" />
-</center>
-<p>那么位置状态量与观测量的关系可以写为：</p>
-<center>
-<img src="12.png" srcset="/img/loading.gif" lazyload width="60%" height="60%" />
-</center>
-<p>将它们代回最初的定义式，可以简单写为：</p>
-<center>
-<img src="13.png" srcset="/img/loading.gif" lazyload width="60%" height="60%" />
-</center>
-<p>可以看到，这里左侧是定义的预积分测量量，只包含原始测量值和偏差，且是累加累乘的形式，很容易由k时刻推导到k+1时刻。从右侧看来，也很容易根据i和j时刻的状态变量来推测预测分观测量的大小，从而写出误差公式，形成最小二乘。</p>
-<p>现在的问题是：预积分的噪声是否符合零均值的高斯分布？如果是，它的协方差有多大？和IMU本身的噪声之间是什么关系</p>
-<h3 id="预积分噪声模型">预积分噪声模型</h3>
-<p>参考 https://zhuanlan.zhihu.com/p/388859808</p>
-<p>噪声的协方差矩阵</p>
-<h3 id="零偏的更新">零偏的更新</h3>
-<p>参考 https://zhuanlan.zhihu.com/p/388859808</p>
-<h3 id="预积分的雅可比矩阵">预积分的雅可比矩阵</h3>
-<p>参考 https://zhuanlan.zhihu.com/p/388859808</p>
+<p>mirror坐标系的中心为<span
+class="math inline">\(C\)</span>，相机坐标系的中心为<span
+class="math inline">\(C_\epsilon\)</span>。两个坐标系的X,Y,Z轴方向一致，只是原点在Z方向有一个偏移<span
+class="math inline">\(\epsilon\)</span>。</p>
+<p>假设P是空间中的一个点，P=(x,y,z)是其在mirror坐标系下的坐标。</p>
+<p>（1）将<span class="math inline">\(P\)</span>投影到单位球面上</p>
+<p><span class="math display">\[P_s = \frac{P}{\|P\|} = (x_s, y_s,
+z_s)\]</span></p>
+<p>（2）将<span class="math inline">\(P_s\)</span>转移到相机坐标系</p>
+<p><span class="math display">\[P_\epsilon= (x_s, y_s, z_s +
+\epsilon)\]</span></p>
+<p>（3）将<span
+class="math inline">\(P_\epsilon\)</span>转移到归一化图像平面</p>
+<p><span class="math display">\[M = (x_m, y_m, 1) = (\frac{x_s}{z_s +
+\epsilon}, \frac{y_s}{z_s + \epsilon}, 1)\]</span></p>
+<ol start="4" type="1">
+<li>将M转移到图像平面</li>
+</ol>
+<p><span class="math display">\[p=\left[\begin{matrix} f_x &amp; 0 &amp;
+u_0 \\ 0 &amp; f_y &amp; v_0 \\ 0 &amp; 0 &amp; 1 \end{matrix}\right]
+M\]</span></p>
+<p>其中，我们可以得到<span
+class="math inline">\(P_s\)</span>关于M的函数：</p>
+<p><span class="math display">\[P_s=g(M) \propto \left[ \begin{matrix}
+    x_m \\ y_m \\ 1-\epsilon \frac{x_m^2+y_m^2 +1}{\epsilon+
+\sqrt{1+(1-\epsilon^2)(x_m^2+y_m^2)}}
+\end{matrix} \right]\]</span></p>
+<h4 id="taylor模型">Taylor模型</h4>
+<p>上述模型可以描述catadioptric
+camera，但却无法用于精确描述鱼眼相机。这主要是因为三种类型的catadioptric
+camera可以通过精确的参数函数（抛物线、双曲线、椭圆）来表示，但鱼眼镜头的投影模型因相机而异，并且取决于视场角，没有一个统一的参数化模型。</p>
+<p>2006年由Scaramuzza et al. [4,5]提出的Taylor模型统一了catadioptric
+camera和鱼眼相机模型。它的主要想法为：</p>
+<p>对于归一化图像上的点M和鱼眼（镜子）坐标系下的3D点<span
+class="math inline">\(P_s\)</span>，映射关系为：</p>
+<p><span class="math display">\[P_s=g(M)\propto \left[ \begin{matrix}
+    x_m \\ y_m \\ a_0+a_2\rho^2+... +a_N\rho^N
+\end{matrix} \right]\]</span></p>
+<p>其中<span class="math inline">\(\rho = \sqrt{x_m^2
++y_m^2}\)</span></p>
+<p>根据多项式的次数不同，该模型可以用来描述perspective camera, fisheye
+camera, catadioptric camera</p>
+<h2 id="畸变模型">畸变模型</h2>
+<h3 id="radtanradial-tangential-distortion">Radtan(radial-tangential
+distortion)</h3>
+<p>由<strong>径向畸变</strong>和<strong>切向畸变</strong>组合。</p>
+<p><strong>径向畸变</strong>是由透镜形状引起的畸变，其畸变程度和离光心的距离相关，主要分为枕形畸变和桶型畸变。畸变公式为：</p>
+<p><span
+class="math display">\[\left.\left\{\begin{array}{c}x_{distorted}=x(1+k_1r^2+k_2r^4+k_3r^6)\\\\y_{distorted}=y(1+k_1r^2+k_2r^4+k_3r^6)\end{array}\right.\right.\]</span></p>
+<p>其中<span class="math inline">\(r^2 = x^2 +
+y^2\)</span>。对于畸变较小的图像中心区域主要是k1起作用，对于畸变较大的边缘区域主要是k2起作用，普通摄像头用这两个系数就可以很好的进行径向畸变的矫正。对于畸变很大的相机，比如鱼眼镜头可以加入k3进行畸变矫正。</p>
+<p>在相机组装过程中由于不能严格使得透镜和成像平面完全平行，这样引起的畸变称为<strong>切向畸变</strong></p>
+<p>组合起来的公式为：</p>
+<p><span
+class="math display">\[\left.\left\{\begin{array}{l}x_{distorted}=x(1+k_1r^2+k_2r^4+k_3r^6)+2p_1xy+p_2(r^2+2x^2)\\\\y_{distorted}=y(1+k_1r^2+k_2r^4+k_3r^6)+p_1(r^2+2y^2)+2p^2xy\end{array}\right.\right.\]</span></p>
+<p>畸变参数包括<span
+class="math inline">\(k_1,k_2,(k_3),p_1,p_2\)</span></p>
+<h3 id="fov">FOV</h3>
+<p><span
+class="math display">\[\left.\left\{\begin{array}{l}x_{distorted}=\frac{r_d}{r}x\\\\y_{distorted}=\frac{r_d}{r}y\end{array}\right.\right.\]</span>
+<span class="math display">\[r^2=x^2+y^2\]</span> <span
+class="math display">\[r_d=\frac{1}{\omega}arctan(2 \cdot r \cdot
+tan(\frac{\omega}{2}))\]</span></p>
+<p>畸变参数<span class="math inline">\(\omega\)</span></p>
+<h3 id="等距畸变equidistantequi">等距畸变(Equidistant,EQUI)</h3>
+<p>设相机坐标系下三维点<span
+class="math inline">\(P=(x,y,z)\)</span>，<span
+class="math inline">\(\theta\)</span>为入射角</p>
+<p><span
+class="math display">\[r^2=\frac{x^2}{z^2}+\frac{y^2}{z^2}\]</span>
+<span
+class="math display">\[\theta=arctan(\frac{\sqrt{x^2+y^2}}{z})=arctan(r)\]</span></p>
+<p>畸变： <span class="math display">\[\theta_d=\theta + k_1 \theta^3 +
+k_2 \theta^5 +k_3 \theta^7 + k_4 \theta^9\]</span></p>
+<p><span
+class="math display">\[\left.\left\{\begin{array}{l}x_{distorted}=\frac{\theta_d}{r}x\\\\y_{distorted}=\frac{\theta_d}{r}y\end{array}\right.\right.\]</span></p>
+<p>畸变参数<span class="math inline">\(k_1,k_2,k_3,k_4\)</span></p>
+<h2 id="参考文献">参考文献</h2>
+<p>[1] Yagi, Y., Kawato, S. (1990). Panorama scene analysis with conic
+projection. IEEE International Conference on Intelligent Robots and
+Systems, Workshop on Towards a New Frontier of Applications</p>
+<p>[2] Geyer, C., Daniilidis, K. (2000). A unifying theory for central
+panoramic systems and practical applications. European Conference on
+Computer Vision</p>
+<p>[3] (Barreto, J.P., Araujo, H.). Issues on the geometry of central
+catadioptric image formation</p>
+<p>[4] Scaramuzza, D., Martinelli, A., Siegwart, R. (2006). A flexible
+technique for accurate omnidirectional camera calibration and structure
+from motion. IEEE International Conference on Computer Vision
+Systems</p>
+<p>[5] Scaramuzza, D., Martinelli, A., Siegwart, R. (2006). A toolbox
+for easy calibrating omnidirectional cameras. IEEE International
+Conference on In- telligent Robots and Systems</p>
 
                 
               </div>
@@ -579,8 +603,8 @@ class="math inline">\(\Delta
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>IMU预积分理论推导</div>
-      <div>https://sisyphus-99.github.io/2023/11/07/imu预积分理论推导/</div>
+      <div>不同相机和畸变模型</div>
+      <div>https://sisyphus-99.github.io/2024/06/05/不同相机和畸变模型/</div>
     </div>
     <div class="license-meta">
       
@@ -592,7 +616,7 @@ class="math inline">\(\Delta
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>November 7, 2023</div>
+          <div>June 5, 2024</div>
         </div>
       
       
@@ -624,18 +648,12 @@ class="math inline">\(\Delta
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/06/05/%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E5%92%8C%E7%95%B8%E5%8F%98%E6%A8%A1%E5%9E%8B/" title="不同相机和畸变模型">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">不同相机和畸变模型</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/10/31/%E7%A7%8B%E6%8B%9B%E9%9D%A2%E8%AF%95%E9%A2%98%E8%AE%B0%E5%BD%952/" title="秋招面试题记录(拟合直线，平面)">
-                        <span class="hidden-mobile">秋招面试题记录(拟合直线，平面)</span>
+                      <a href="/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/" title="IMU预积分理论推导">
+                        <span class="hidden-mobile">IMU预积分理论推导</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

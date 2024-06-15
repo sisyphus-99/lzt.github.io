@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://sisyphus-99.github.io/2023/09/29/vinsmono%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/1.png">
 <meta property="article:published_time" content="2023-09-29T06:48:29.000Z">
-<meta property="article:modified_time" content="2023-11-08T04:24:32.039Z">
+<meta property="article:modified_time" content="2024-02-21T03:22:37.141Z">
 <meta property="article:author" content="sisyphus">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://sisyphus-99.github.io/2023/09/29/vinsmono%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/1.png">
@@ -250,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          17k words
+          16k words
         
       </span>
     
@@ -261,7 +261,7 @@
         
         
         
-          142 mins
+          130 mins
         
       </span>
     
@@ -319,7 +319,7 @@
         aria-expanded="true"
       >
         SLAM
-        <span class="list-group-count">(8)</span>
+        <span class="list-group-count">(9)</span>
         <i class="iconfont icon-arrowright"></i>
       </a>
       
@@ -403,6 +403,15 @@
         </a>
       
     
+      
+      
+        <a href="/2024/06/05/%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E5%92%8C%E7%95%B8%E5%8F%98%E6%A8%A1%E5%9E%8B/" title="不同相机和畸变模型"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">不同相机和畸变模型</span>
+        </a>
+      
+    
   </div>
 
         
@@ -435,36 +444,45 @@
 <img src="1.png" srcset="/img/loading.gif" lazyload width="100%" height="100%" />
 </center>
 <p>输入是相机(30Hz)和IMU(100Hz)</p>
-<p>有以下几个模块：</p>
-<ul>
-<li>Sect.IV 测量预处理: 图片做特征提取和跟踪，IMU做预积分</li>
-<li>Sect.V 初始化：视觉-惯性外参估计，纯视觉SFM</li>
-<li>Sect.VI, VII 局部VIO和重定位</li>
-<li>Sect.VIII 全局位姿图优化</li>
-</ul>
-<p>VIO、重新定位和位姿图优化模块在多线程设置中同时运行。每个模块有不同的运行速度和实时保证。</p>
-<p>从代码角度，ROS launch文件启动了三个节点</p>
-<ul>
-<li>feature_tracker</li>
-<li>vins_estimator</li>
-<li>pose_graph</li>
-</ul>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs abnf">&lt;launch&gt;<br>    &lt;arg name<span class="hljs-operator">=</span><span class="hljs-string">&quot;config_path&quot;</span> default <span class="hljs-operator">=</span> <span class="hljs-string">&quot;$(find feature_tracker)/../config/euroc/euroc_config.yaml&quot;</span> /&gt;<br>	  &lt;arg name<span class="hljs-operator">=</span><span class="hljs-string">&quot;vins_path&quot;</span> default <span class="hljs-operator">=</span> <span class="hljs-string">&quot;$(find feature_tracker)/../config/../&quot;</span> /&gt;<br>    <br>    &lt;node name<span class="hljs-operator">=</span><span class="hljs-string">&quot;feature_tracker&quot;</span> pkg<span class="hljs-operator">=</span><span class="hljs-string">&quot;feature_tracker&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;feature_tracker&quot;</span> output<span class="hljs-operator">=</span><span class="hljs-string">&quot;log&quot;</span>&gt;<br>        &lt;param name<span class="hljs-operator">=</span><span class="hljs-string">&quot;config_file&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;string&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;$(arg config_path)&quot;</span> /&gt;<br>        &lt;param name<span class="hljs-operator">=</span><span class="hljs-string">&quot;vins_folder&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;string&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;$(arg vins_path)&quot;</span> /&gt;<br>    &lt;/node&gt;<br><br>    &lt;node name<span class="hljs-operator">=</span><span class="hljs-string">&quot;vins_estimator&quot;</span> pkg<span class="hljs-operator">=</span><span class="hljs-string">&quot;vins_estimator&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;vins_estimator&quot;</span> output<span class="hljs-operator">=</span><span class="hljs-string">&quot;screen&quot;</span>&gt;<br>       &lt;param name<span class="hljs-operator">=</span><span class="hljs-string">&quot;config_file&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;string&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;$(arg config_path)&quot;</span> /&gt;<br>       &lt;param name<span class="hljs-operator">=</span><span class="hljs-string">&quot;vins_folder&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;string&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;$(arg vins_path)&quot;</span> /&gt;<br>    &lt;/node&gt;<br><br>    &lt;node name<span class="hljs-operator">=</span><span class="hljs-string">&quot;pose_graph&quot;</span> pkg<span class="hljs-operator">=</span><span class="hljs-string">&quot;pose_graph&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;pose_graph&quot;</span> output<span class="hljs-operator">=</span><span class="hljs-string">&quot;screen&quot;</span>&gt;<br>        &lt;param name<span class="hljs-operator">=</span><span class="hljs-string">&quot;config_file&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;string&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;$(arg config_path)&quot;</span> /&gt;<br>        &lt;param name<span class="hljs-operator">=</span><span class="hljs-string">&quot;visualization_shift_x&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;int&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;0&quot;</span> /&gt;<br>        &lt;param name<span class="hljs-operator">=</span><span class="hljs-string">&quot;visualization_shift_y&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;int&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;0&quot;</span> /&gt;<br>        &lt;param name<span class="hljs-operator">=</span><span class="hljs-string">&quot;skip_cnt&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;int&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;0&quot;</span> /&gt;<br>        &lt;param name<span class="hljs-operator">=</span><span class="hljs-string">&quot;skip_dis&quot;</span> type<span class="hljs-operator">=</span><span class="hljs-string">&quot;double&quot;</span> value<span class="hljs-operator">=</span><span class="hljs-string">&quot;0&quot;</span> /&gt;<br>    &lt;/node&gt;<br><br>&lt;/launch&gt;<br></code></pre></td></tr></table></figure>
-<p>本篇文章主要关注feature_tracker这个节点，这个节点对图片提取，跟踪特征点，特征点去畸变，发布提取的特征点。</p>
-<h3 id="视觉处理前端">视觉处理前端</h3>
-<p>主要目的：跟踪连续帧之间的特征点并在最新帧中检测新特征点，以保持一定的特征点数量。</p>
-<p>论文中主要提到了以下5个点</p>
-<p>1、对于每一幅新图像，KLT稀疏光流算法对现有特征进行跟踪；</p>
-<p>2、检测新的角点特征以保证每个图像特征的最小数目(100-300)；</p>
-<p>3、通过设置两个相邻特征之间像素的最小间隔来执行均匀的特征分布；</p>
-<p>4、利用基本矩阵模型的RANSAC算法进行外点剔除；</p>
-<p>5、对特征点进行去畸变矫正，然后投影到一个单位球面上。</p>
-<p><strong>代码分析</strong></p>
-<p>为了更好地理解各个步骤我们来看代码。这一部分的代码在feature_tracker文件夹下：</p>
+<p>从代码角度，ROS
+launch文件启动了三个节点。相当于三个进程。每个进程有接收和发布的topic</p>
+<table>
+
+<thead>
+<tr class="header">
+<th>节点</th>
+<th>订阅topic</th>
+<th>发布topic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>feature_tracker</td>
+<td>IMAGE_TOPIC</td>
+<td>"feature", "feature_img"</td>
+</tr>
+<tr class="even">
+<td>vins_estimator</td>
+<td>IMU_TOPIC, "/feature_tracker/feature", "/feature_tracker/restart",
+"pose_graph/match_points"</td>
+<td>"imu_propagate"</td>
+</tr>
+<tr class="odd">
+<td>pose_graph</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="feature_tracker">feature_tracker</h2>
+<h3 id="overview">overview</h3>
+<p>feature_tracker接收图片，发布检测到的特征点，标出特征点的图片（用于可视化）。</p>
+<p>特征点的结构如下： <figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-meta"># ros message, 用于存储三维点</span><br><br><span class="hljs-meta"># 数据获取的时间, 坐标系的ID(str)</span><br><span class="hljs-built_in">Header</span> <span class="hljs-built_in">header</span> <br><br><span class="hljs-meta"># 三维点的array,二维点将最后一维写为1，vins中存的是去畸变的点的x,y</span><br>geometry_msgs/Point32[] points<br><br><span class="hljs-meta"># 点的额外信息。vins中加了点的id,未去畸变的u,v,光流法得到的像素速度</span><br>ChannelFloat32[] channels<br></code></pre></td></tr></table></figure></p>
+<p>feature_tracker文件夹下的内容：</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs 1c">feature_tracker<br><span class="hljs-string">|- src</span><br>    <span class="hljs-string">|- feature_tracker.cpp</span><br>    <span class="hljs-string">|- feature_tracker.h</span><br>    <span class="hljs-string">|- feature_tracker_node.cpp</span><br>    <span class="hljs-string">|- parameters.cpp</span><br>    <span class="hljs-string">|- parameters.h</span><br></code></pre></td></tr></table></figure>
 <p>主要三个源程序，feature_tracker_node(.cpp/.h)是特征跟踪线程的系统入口，feature_tracker(.cpp/.h)是特征跟踪算法的具体实现，parameters(.cpp/.h)是参数的读取和存放</p>
-<h4 id="img_callback">img_callback()</h4>
-<p>主要分为两部分： - int main() 函数为程序入口 - void
+<h3 id="细节">细节</h3>
+<p>feature_tracker_node.cpp： - int main() 函数为程序入口 - void
 img_callback()为ROS的回调函数，对每一帧图像消息进行特征点追踪，处理和发布。</p>
 <p>我们从<strong>main()</strong>函数开始看：主要包括初始化；读入参数；订阅和发布。核心在于订阅原始图片信息，通过img_callback跟踪和检测特征点，再发布特征点.</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    ros::<span class="hljs-built_in">init</span>(argc, argv, <span class="hljs-string">&quot;feature_tracker&quot;</span>); <span class="hljs-comment">// 初始化节点，节点名称为feature_tracker</span><br>    <span class="hljs-function">ros::NodeHandle <span class="hljs-title">n</span><span class="hljs-params">(<span class="hljs-string">&quot;~&quot;</span>)</span></span>; <span class="hljs-comment">// 创建节点句柄</span><br>    ros::console::<span class="hljs-built_in">set_logger_level</span>(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Info);<br><br>    <span class="hljs-comment">// 读入参数</span><br>    <span class="hljs-built_in">readParameters</span>(n); <span class="hljs-comment">// --1 这个函数定义在parameters.cpp中</span><br>    <span class="hljs-comment">// 读入内参</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; NUM_OF_CAM; i++)<br>        trackerData[i].<span class="hljs-built_in">readIntrinsicParameter</span>(CAM_NAMES[i]);<br>    <br>    <span class="hljs-comment">// --2 如果是鱼眼相机，就读入MASK</span><br>    <span class="hljs-keyword">if</span>(FISHEYE)<br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; NUM_OF_CAM; i++) <span class="hljs-comment">// NUM_OF_CAM是常量1</span><br>        &#123;<br>            trackerData[i].fisheye_mask = cv::<span class="hljs-built_in">imread</span>(FISHEYE_MASK, <span class="hljs-number">0</span>);<br>            <span class="hljs-keyword">if</span>(!trackerData[i].fisheye_mask.data)<br>            &#123;<br>                <span class="hljs-built_in">ROS_INFO</span>(<span class="hljs-string">&quot;load mask fail&quot;</span>);<br>                <span class="hljs-built_in">ROS_BREAK</span>();<br>            &#125;<br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-built_in">ROS_INFO</span>(<span class="hljs-string">&quot;load mask success&quot;</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 订阅原始图片信息，img_callback对图片进行处理</span><br>    ros::Subscriber sub_img = n.<span class="hljs-built_in">subscribe</span>(IMAGE_TOPIC, <span class="hljs-number">100</span>, img_callback);<br><br>    <span class="hljs-comment">// 发布检测跟踪的特征</span><br>    pub_img = n.<span class="hljs-built_in">advertise</span>&lt;sensor_msgs::PointCloud&gt;(<span class="hljs-string">&quot;feature&quot;</span>, <span class="hljs-number">1000</span>);<br><br>    <span class="hljs-comment">// 发布显示特征点的图片，用于可视化</span><br>    pub_match = n.<span class="hljs-built_in">advertise</span>&lt;sensor_msgs::Image&gt;(<span class="hljs-string">&quot;feature_img&quot;</span>,<span class="hljs-number">1000</span>);<br>    pub_restart = n.<span class="hljs-built_in">advertise</span>&lt;std_msgs::Bool&gt;(<span class="hljs-string">&quot;restart&quot;</span>,<span class="hljs-number">1000</span>);<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    if (SHOW_TRACK)</span><br><span class="hljs-comment">        cv::namedWindow(&quot;vis&quot;, cv::WINDOW_NORMAL);</span><br><span class="hljs-comment">    */</span><br>    ros::<span class="hljs-built_in">spin</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>

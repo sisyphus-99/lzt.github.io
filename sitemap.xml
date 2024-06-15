@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/</loc>
+    <loc>https://sisyphus-99.github.io/2024/06/05/%E4%B8%8D%E5%90%8C%E7%9B%B8%E6%9C%BA%E5%92%8C%E7%95%B8%E5%8F%98%E6%A8%A1%E5%9E%8B/</loc>
     
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-14</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -13,7 +13,16 @@
   <url>
     <loc>https://sisyphus-99.github.io/2023/09/29/vinsmono%E8%AE%BA%E6%96%87%E4%B8%8E%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB1/</loc>
     
-    <lastmod>2023-11-08</lastmod>
+    <lastmod>2024-02-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://sisyphus-99.github.io/2023/11/07/imu%E9%A2%84%E7%A7%AF%E5%88%86%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC/</loc>
+    
+    <lastmod>2023-11-10</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -229,7 +238,7 @@
 
   <url>
     <loc>https://sisyphus-99.github.io/</loc>
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -239,56 +248,56 @@
   
   <url>
     <loc>https://sisyphus-99.github.io/categories/%E9%9A%8F%E7%AC%94/</loc>
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://sisyphus-99.github.io/categories/%E5%89%8D%E7%AB%AF/</loc>
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://sisyphus-99.github.io/categories/C/</loc>
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://sisyphus-99.github.io/categories/SLAM/</loc>
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://sisyphus-99.github.io/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</loc>
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://sisyphus-99.github.io/categories/%E6%A0%87%E5%AE%9A/</loc>
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://sisyphus-99.github.io/categories/deep-learning/</loc>
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://sisyphus-99.github.io/categories/2024%E7%A7%8B%E6%8B%9B/</loc>
-    <lastmod>2023-11-10</lastmod>
+    <lastmod>2024-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
